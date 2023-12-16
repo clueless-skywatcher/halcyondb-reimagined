@@ -1,0 +1,3 @@
+#!/bin/bash
+
+java -cp ./halcyondb-reimagined/target/halcyon-reimagined.jar com.github.cluelessskywatcher.halcyonreimagined.HalcsRepl

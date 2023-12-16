@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./halcs-build
+clear
+./halcs

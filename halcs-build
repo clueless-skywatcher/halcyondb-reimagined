@@ -1,0 +1,3 @@
+#!/bin/bash
+
+mvn -f ./halcyondb-reimagined/pom.xml package
