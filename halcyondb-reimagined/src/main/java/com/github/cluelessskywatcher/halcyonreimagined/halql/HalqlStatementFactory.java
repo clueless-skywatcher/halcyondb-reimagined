@@ -1,5 +1,8 @@
 package com.github.cluelessskywatcher.halcyonreimagined.halql;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.github.cluelessskywatcher.halcyonreimagined.halql.dml.InsertRowStatement;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.dql.SelectTableStatement;
 import com.github.cluelessskywatcher.halcyonreimagined.repl.PrepareResult;
@@ -19,8 +22,15 @@ public class HalqlStatementFactory {
         String bufferContent = buffer.getBuffer();
         
         if (bufferContent.startsWith("insert")) {
-            this.preparedStatement = new InsertRowStatement(bufferContent);
-            return PrepareResult.PREPARE_SUCCESS;
+            Pattern insertPattern = Pattern.compile("insert into (\\w+) values \\(([^)]*)\\);");
+            Matcher matcher = insertPattern.matcher(bufferContent);
+            if (matcher.matches()) {
+                this.preparedStatement = new InsertRowStatement(bufferContent);
+                return PrepareResult.PREPARE_SUCCESS;
+            }
+            else {
+                return PrepareResult.PREPARE_SYNTAX_ERROR;
+            }
         }
         if (bufferContent.startsWith("select")) {
             this.preparedStatement = new SelectTableStatement(bufferContent);

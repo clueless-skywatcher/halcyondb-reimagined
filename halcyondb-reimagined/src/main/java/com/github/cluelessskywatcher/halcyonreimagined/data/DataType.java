@@ -13,6 +13,10 @@ public enum DataType {
         public DataField parse() {
             throw new UnsupportedOperationException("Unimplemented method 'parse'");
         }
+
+        public String toString() {
+            return "int";
+        }
     },
     STRING {
         @Override
@@ -23,6 +27,10 @@ public enum DataType {
         @Override
         public DataField parse() {
             throw new UnsupportedOperationException("Unimplemented method 'parse'");
+        }
+
+        public String toString() {
+            return "str";
         }
     };
 

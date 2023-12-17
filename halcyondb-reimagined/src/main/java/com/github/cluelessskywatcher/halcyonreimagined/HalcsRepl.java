@@ -26,9 +26,11 @@ public class HalcsRepl {
             switch (factory.prepareStatementFromBuffer(buffer)) {
                 case PREPARE_SUCCESS:
                     break;
-            
                 case PREPARE_UNRECOGNIZED:
-                    System.err.printf("Unrecognized statement: '%s'\n", buffer.getBuffer());
+                    System.out.printf("Unrecognized statement: '%s'\n", buffer.getBuffer());
+                    continue;
+                case PREPARE_SYNTAX_ERROR:
+                    System.out.println("Syntax error");
                     continue;
             }
 

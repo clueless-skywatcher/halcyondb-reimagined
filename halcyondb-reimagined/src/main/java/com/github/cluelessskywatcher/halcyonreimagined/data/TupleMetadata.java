@@ -1,6 +1,7 @@
 package com.github.cluelessskywatcher.halcyonreimagined.data;
 
 import java.security.InvalidParameterException;
+import java.util.StringJoiner;
 
 public class TupleMetadata {
     private DataType[] types;
@@ -59,5 +60,14 @@ public class TupleMetadata {
             return true;
         }
         return false;
+    }
+
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ");
+        for (int i = 0; i < getFieldCount(); i++) {
+            joiner.add(String.format("%s %s", fieldNames[i], types[i]));
+        }
+
+        return String.format("(%s)", joiner.toString());
     }
 }

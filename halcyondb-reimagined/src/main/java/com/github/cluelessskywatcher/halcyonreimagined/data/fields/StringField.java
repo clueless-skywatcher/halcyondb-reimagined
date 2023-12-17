@@ -45,4 +45,8 @@ public class StringField implements DataField {
             stream.write((byte) 0);
         }
     }
+
+    public String toString() {
+        return value;
+    }
 }

@@ -6,14 +6,16 @@ import lombok.Setter;
 @Setter
 @Getter
 public abstract class HalqlStatement {
-    String statement;
+    private String statement;
 
     public HalqlStatement(String statement) {
         this.statement = statement;
         extractDataFromStatement();
     }
     
+    // Logic to execute the statement
     public abstract void execute();
 
+    // Logic to parse/extract all necessary data from the statement
     public abstract void extractDataFromStatement();
 }

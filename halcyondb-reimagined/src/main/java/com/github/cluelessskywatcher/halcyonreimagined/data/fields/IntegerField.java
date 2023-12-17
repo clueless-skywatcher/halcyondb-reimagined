@@ -34,4 +34,8 @@ public class IntegerField implements DataField {
     public void serialize(DataOutputStream stream) throws IOException {
         stream.writeInt(value);
     }
+
+    public String toString() {
+        return Integer.toString(value);
+    }
 }
