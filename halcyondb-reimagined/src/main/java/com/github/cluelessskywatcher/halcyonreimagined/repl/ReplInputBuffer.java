@@ -2,7 +2,9 @@ package com.github.cluelessskywatcher.halcyonreimagined.repl;
 
 import java.util.Scanner;
 
-public class ReplInputBuffer {
+import com.github.cluelessskywatcher.halcyonreimagined.InputBuffer;
+
+public class ReplInputBuffer implements InputBuffer {
     private String buffer;
     private Scanner scanner;
 

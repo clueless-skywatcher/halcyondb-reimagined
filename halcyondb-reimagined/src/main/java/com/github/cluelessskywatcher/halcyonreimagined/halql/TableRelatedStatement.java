@@ -1,5 +1,6 @@
 package com.github.cluelessskywatcher.halcyonreimagined.halql;
 
+import com.github.cluelessskywatcher.halcyonreimagined.data.DataTable;
 import com.github.cluelessskywatcher.halcyonreimagined.data.TupleMetadata;
 
 import lombok.Getter;
@@ -8,9 +9,10 @@ import lombok.Setter;
 @Setter
 @Getter
 public abstract class TableRelatedStatement extends HalqlStatement {
-    private TupleMetadata tableDescription;
-
-    public TableRelatedStatement(String statement) {
+    protected TupleMetadata tableDescription;
+    protected DataTable table;
+    
+    public TableRelatedStatement(String statement) throws Exception {
         super(statement);
     }
 }

@@ -6,7 +6,7 @@ import com.github.cluelessskywatcher.halcyonreimagined.repl.MetaCommands;
 import com.github.cluelessskywatcher.halcyonreimagined.repl.ReplInputBuffer;
 
 public class HalcsRepl {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         ReplInputBuffer buffer = new ReplInputBuffer();
         while (true) {
             System.out.print("db >> ");
