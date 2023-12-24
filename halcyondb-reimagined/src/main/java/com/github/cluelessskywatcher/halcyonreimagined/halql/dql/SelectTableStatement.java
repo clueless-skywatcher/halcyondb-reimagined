@@ -1,14 +1,11 @@
 package com.github.cluelessskywatcher.halcyonreimagined.halql.dql;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.github.cluelessskywatcher.halcyonreimagined.HalcyonDBInstance;
 import com.github.cluelessskywatcher.halcyonreimagined.data.DataTable;
 import com.github.cluelessskywatcher.halcyonreimagined.data.Tuple;
-import com.github.cluelessskywatcher.halcyonreimagined.exceptions.QueryParsingException;
-import com.github.cluelessskywatcher.halcyonreimagined.exceptions.TableNotFoundException;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.TableRelatedStatement;
 import com.github.cluelessskywatcher.halcyonreimagined.models.dql.SelectTableResult;
 
@@ -41,13 +38,16 @@ public class SelectTableStatement extends TableRelatedStatement {
         if (matcher.matches()) {
             String tableName = matcher.group(1);
             if (HalcyonDBInstance.getCatalog().getTable(tableName) == null) {
-                throw new TableNotFoundException(String.format("No table called %s in database", tableName));
+                String errorMsg = String.format("No table called %s in database", tableName);
+                setResult(new SelectTableResult(errorMsg));
+                return;
             }
             setTable(HalcyonDBInstance.getCatalog().getTable(tableName));
             setTableDescription(getTable().getMetadata());
         }
         else {
-            throw new QueryParsingException("Cannot parse SELECT query");
+            setResult(new SelectTableResult("Cannot parse SELECT query"));
+            return;
         }
-    }    
+    }  
 }

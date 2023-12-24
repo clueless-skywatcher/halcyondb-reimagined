@@ -39,7 +39,6 @@ public class InsertRowStatement extends TableRelatedStatement {
         setTable(table);
         setResult(new InsertRowResult(getTable().getTableName(), new Tuple[] {tuple}));
         HalcyonDBInstance.getCatalog().addTable(table, getTableDescription());
-        System.out.println("INSERT 1 -> SUCCESS");
     }
 
     @Override
@@ -57,19 +56,26 @@ public class InsertRowStatement extends TableRelatedStatement {
         SchemaCatalog schemaCatalog = HalcyonDBInstance.getCatalog();
 
         if (schemaCatalog.getTable(tableName) == null) {
-            throw new TableNotFoundException(String.format("No table called %s in database", tableName));
+            String errorMsg = String.format(
+                "No table called %s in database",
+                tableName
+            );
+            setResult(new InsertRowResult(errorMsg));
+            return;
         } else {
             setTableDescription(schemaCatalog.getTableMetadata(tableName));
             setTable(schemaCatalog.getTable(tableName));
         }
 
         if (getTableDescription().getFieldCount() != fields.length) {
-            throw new QueryParsingException(String.format(
+            String errorMsg = String.format(
                 "Query has %d fields while table %s has %d fields",
                 fields.length,
                 tableName,
                 getTableDescription().getFieldCount()
-            ));
+            );
+            setResult(new InsertRowResult(errorMsg));
+            return;
         }
 
         DataField[] fieldVals = new DataField[getTableDescription().getFieldCount()];
@@ -80,7 +86,8 @@ public class InsertRowStatement extends TableRelatedStatement {
             }
             else if (getTableDescription().getTypeAt(i) == DataType.STRING) {
                 if (!fields[i].startsWith("\"") || !fields[i].endsWith("\"")) {
-                    throw new QueryParsingException("Strings should be enclosed within double quotes");
+                    setResult(new InsertRowResult("Strings should be enclosed within double quotes"));
+                    return;
                 }
                 fields[i] = fields[i].replace("\"", "");
                 fieldVals[i] = new StringField(fields[i]);
@@ -88,5 +95,5 @@ public class InsertRowStatement extends TableRelatedStatement {
         }
         System.err.println(Arrays.toString(fieldVals));
         setValues(fieldVals);
-    }    
+    }
 }

@@ -35,7 +35,13 @@ public class HalcsRepl {
             }
 
             HalqlStatement statement = factory.getPreparedStatement();
-            statement.execute();            
+            try {
+                statement.execute();
+                statement.getResult().showResult();
+            } 
+            catch (Exception e) {
+                statement.getResult().showResult();
+            }
         }
     }
 }

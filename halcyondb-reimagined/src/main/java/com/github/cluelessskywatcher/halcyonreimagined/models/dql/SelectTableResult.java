@@ -13,4 +13,20 @@ public class SelectTableResult extends TableRelatedResult {
         this.rows = rows;
         this.tableName = tableName;
     }
+
+    public SelectTableResult(String error) {
+        this.error = error;
+    }
+
+    @Override
+    public void showResult() {
+        if (error != null) {
+            System.out.println(error);
+        }
+        if (rows != null) {
+            for (Tuple row : rows) {
+                System.out.println(row.toString());
+            }
+        }
+    }
 }
