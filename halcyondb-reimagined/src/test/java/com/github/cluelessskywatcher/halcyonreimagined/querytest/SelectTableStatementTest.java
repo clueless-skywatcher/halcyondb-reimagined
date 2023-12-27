@@ -14,7 +14,6 @@ import com.github.cluelessskywatcher.halcyonreimagined.data.TupleMetadata;
 import com.github.cluelessskywatcher.halcyonreimagined.data.fields.DataField;
 import com.github.cluelessskywatcher.halcyonreimagined.data.fields.IntegerField;
 import com.github.cluelessskywatcher.halcyonreimagined.data.fields.StringField;
-import com.github.cluelessskywatcher.halcyonreimagined.halql.HalqlStatementFactory;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.dql.SelectTableStatement;
 import com.github.cluelessskywatcher.halcyonreimagined.models.dql.SelectTableResult;
 import com.github.cluelessskywatcher.halcyonreimagined.utils.GeneralUtils;
@@ -23,13 +22,11 @@ import com.github.cluelessskywatcher.halcyonreimagined.utils.TestingBuffer;
 @TestInstance(Lifecycle.PER_CLASS)
 public class SelectTableStatementTest {
     private TestingBuffer buffer;
-    private HalqlStatementFactory factory;
-
+    
     @BeforeAll
     public void setUp() throws Exception {
         this.buffer = new TestingBuffer();
-        this.factory = new HalqlStatementFactory();
-
+        
         HalcyonDBInstance.getCatalog().addTable("table1",
             new TupleMetadata(
                 new DataType[] {DataType.INTEGER, DataType.INTEGER},
@@ -43,13 +40,13 @@ public class SelectTableStatementTest {
             )
         );
         
-        GeneralUtils.invokeInsert("insert into table1 values (1, 2);", buffer, factory);
-        GeneralUtils.invokeInsert("insert into table1 values (2, 3);", buffer, factory);
-        GeneralUtils.invokeInsert("insert into table1 values (3, 11);", buffer, factory);
+        GeneralUtils.invokeInsert("insert into table1 values (1, 2);", buffer);
+        GeneralUtils.invokeInsert("insert into table1 values (2, 3);", buffer);
+        GeneralUtils.invokeInsert("insert into table1 values (3, 11);", buffer);
 
-        GeneralUtils.invokeInsert("insert into table2 values (\"This\", \"is\", \"Sentence1\");", buffer, factory);
-        GeneralUtils.invokeInsert("insert into table2 values (\"This\", \"is\", \"Sentence2\");", buffer, factory);
-        GeneralUtils.invokeInsert("insert into table2 values (\"This\", \"is\", \"Sentence3\");", buffer, factory);
+        GeneralUtils.invokeInsert("insert into table2 values (\"This\", \"is\", \"Sentence1\");", buffer);
+        GeneralUtils.invokeInsert("insert into table2 values (\"This\", \"is\", \"Sentence2\");", buffer);
+        GeneralUtils.invokeInsert("insert into table2 values (\"This\", \"is\", \"Sentence3\");", buffer);
     }
 
     @AfterAll
@@ -60,7 +57,7 @@ public class SelectTableStatementTest {
     @Test
     public void testQueryType() throws Exception {
         Assertions.assertEquals(
-            GeneralUtils.getQueryType("select * from table1;", buffer, factory),
+            GeneralUtils.getQueryType("select * from table1;", buffer),
             SelectTableStatement.class
         );
     }
@@ -95,7 +92,7 @@ public class SelectTableStatementTest {
                 metadata
             )
         };
-        SelectTableResult result = GeneralUtils.invokeSelect("select * from table1;", buffer, factory);
+        SelectTableResult result = GeneralUtils.invokeSelect("select * from table1;", buffer);
         Assertions.assertEquals(result.getRows().length, 3);
         Assertions.assertTrue(GeneralUtils.matchTuples(result.getRows(), table1ExpectedResult));
     }
@@ -133,7 +130,7 @@ public class SelectTableStatementTest {
                 metadata
             )
         };
-        SelectTableResult result = GeneralUtils.invokeSelect("select * from table2;", buffer, factory);
+        SelectTableResult result = GeneralUtils.invokeSelect("select * from table2;", buffer);
         Assertions.assertEquals(result.getRows().length, 3);
         Assertions.assertTrue(GeneralUtils.matchTuples(result.getRows(), table2ExpectedResult));
     }

@@ -11,8 +11,4 @@ import lombok.Setter;
 public abstract class TableRelatedStatement extends HalqlStatement {
     protected TupleMetadata tableDescription;
     protected DataTable table;
-    
-    public TableRelatedStatement(String statement) throws Exception {
-        super(statement);
-    }
 }

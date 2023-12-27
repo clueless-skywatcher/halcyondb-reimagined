@@ -1,7 +1,7 @@
 package com.github.cluelessskywatcher.halcyonreimagined;
 
+import com.github.cluelessskywatcher.halcyonreimagined.halql.HalqlParserEngine;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.HalqlStatement;
-import com.github.cluelessskywatcher.halcyonreimagined.halql.HalqlStatementFactory;
 import com.github.cluelessskywatcher.halcyonreimagined.repl.MetaCommands;
 import com.github.cluelessskywatcher.halcyonreimagined.repl.ReplInputBuffer;
 
@@ -21,26 +21,13 @@ public class HalcsRepl {
                 }
             }
 
-            HalqlStatementFactory factory = new HalqlStatementFactory();
-
-            switch (factory.prepareStatementFromBuffer(buffer)) {
-                case PREPARE_SUCCESS:
-                    break;
-                case PREPARE_UNRECOGNIZED:
-                    System.out.printf("Unrecognized statement: '%s'\n", buffer.getBuffer());
-                    continue;
-                case PREPARE_SYNTAX_ERROR:
-                    System.out.println("Syntax error");
-                    continue;
-            }
-
-            HalqlStatement statement = factory.getPreparedStatement();
+            HalqlStatement stmt = HalqlParserEngine.parseQuery(buffer);
             try {
-                statement.execute();
-                statement.getResult().showResult();
+                stmt.execute();
+                stmt.getResult().showResult();
             } 
             catch (Exception e) {
-                statement.getResult().showResult();
+                stmt.getResult().showResult();
             }
         }
     }
