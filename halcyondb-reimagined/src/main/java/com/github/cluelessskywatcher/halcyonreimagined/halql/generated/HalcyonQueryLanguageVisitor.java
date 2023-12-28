@@ -1,5 +1,9 @@
 // Generated from com/github/cluelessskywatcher/halcyonreimagined/halql/generated/HalcyonQueryLanguage.g4 by ANTLR 4.7.1
 package com.github.cluelessskywatcher.halcyonreimagined.halql.generated;
+
+import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
+import java.util.*;
+
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -47,6 +51,12 @@ public interface HalcyonQueryLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInsertRowStatement(HalcyonQueryLanguageParser.InsertRowStatementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HalcyonQueryLanguageParser#createTableStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCreateTableStatement(HalcyonQueryLanguageParser.CreateTableStatementContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HalcyonQueryLanguageParser#selectTableStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -59,11 +69,29 @@ public interface HalcyonQueryLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTableIdentifier(HalcyonQueryLanguageParser.TableIdentifierContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HalcyonQueryLanguageParser#fieldIdentifier}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFieldIdentifier(HalcyonQueryLanguageParser.FieldIdentifierContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HalcyonQueryLanguageParser#identifier}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitIdentifier(HalcyonQueryLanguageParser.IdentifierContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HalcyonQueryLanguageParser#tableDefinition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTableDefinition(HalcyonQueryLanguageParser.TableDefinitionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HalcyonQueryLanguageParser#fieldDefinition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFieldDefinition(HalcyonQueryLanguageParser.FieldDefinitionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HalcyonQueryLanguageParser#values}.
 	 * @param ctx the parse tree
@@ -76,4 +104,10 @@ public interface HalcyonQueryLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitConstValue(HalcyonQueryLanguageParser.ConstValueContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HalcyonQueryLanguageParser#dataType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDataType(HalcyonQueryLanguageParser.DataTypeContext ctx);
 }

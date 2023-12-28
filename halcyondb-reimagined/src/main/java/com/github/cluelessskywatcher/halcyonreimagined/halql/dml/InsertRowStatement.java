@@ -10,7 +10,7 @@ import com.github.cluelessskywatcher.halcyonreimagined.data.fields.DataField;
 import com.github.cluelessskywatcher.halcyonreimagined.data.fields.IntegerField;
 import com.github.cluelessskywatcher.halcyonreimagined.data.fields.StringField;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.TableRelatedStatement;
-import com.github.cluelessskywatcher.halcyonreimagined.models.dml.InsertRowResult;
+import com.github.cluelessskywatcher.halcyonreimagined.halql.models.dml.InsertRowResult;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -39,7 +39,7 @@ public class InsertRowStatement extends TableRelatedStatement {
                         values.length,
                         tableName,
                         getTableDescription().getFieldCount());
-                setResult(new InsertRowResult(errorMsg));
+                setResult(new InsertRowResult(null));
                 return;
             }
         }
@@ -66,10 +66,13 @@ public class InsertRowStatement extends TableRelatedStatement {
     public void execute() throws Exception {
         Tuple tuple = Tuple.construct(getValues(), getTableDescription());
         DataTable table = getTable();
-
+        
+        long time = System.currentTimeMillis();
         table.insert(tuple);
+        time = System.currentTimeMillis() - time;
+        
         setTable(table);
-        setResult(new InsertRowResult(getTable().getTableName(), new Tuple[] { tuple }));
+        setResult(new InsertRowResult(getTable().getTableName(), new Tuple[] { tuple }, time));
         HalcyonDBInstance.getCatalog().addTable(table, getTableDescription());
     }
 

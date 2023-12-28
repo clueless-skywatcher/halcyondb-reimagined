@@ -4,6 +4,23 @@ options {
     language = Java;
 }
 
+@header {
+import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
+import java.util.*;
+}
+
+@members {
+    class FieldDef {
+        public String fieldId;
+        public DataType dataType;
+
+        public FieldDef(String fieldName, DataType dataType) {
+            this.fieldId = fieldName;
+            this.dataType = dataType;
+        }
+    }
+}
+
 halqlEntryPoint :   halqlStatement ';' ;
 
 halqlStatement  
@@ -16,7 +33,8 @@ halqlDmlStatement
     :   insertRowStatement
     ;
 
-halqlDdlStatement:
+halqlDdlStatement
+    :   createTableStatement
     ;
 
 halqlDqlStatement
@@ -27,17 +45,37 @@ insertRowStatement
     :   KWORD_INSERT KWORD_INTO tableIdentifier KWORD_VALUES '(' values ')' 
     ;
 
+createTableStatement
+    :   KWORD_CREATE KWORD_TABLE tableIdentifier KWORD_WITH '(' tableDefinition ')'
+    ;
+
 selectTableStatement
-    :   KWORD_SELECT ASTERISK KWORD_FROM tableIdentifier
+    :   KWORD_SELECT ASTERISK KWORD_FROM tableIdentifier KWORD_WITH '(' tableDefinition ')'
     ;
 
 tableIdentifier
-    :   name=identifier
+    :   identifier
+    ;
+
+fieldIdentifier returns [String fieldId]
+    :   IDENTIFIER { $fieldId = $IDENTIFIER.text; }
     ;
 
 identifier
     :   IDENTIFIER '.' IDENTIFIER
     |   IDENTIFIER
+    ;
+
+tableDefinition returns [ Map<String, DataType> tableDef ]
+    @init {
+        $tableDef = new LinkedHashMap<String, DataType>();
+    }
+    :   a=fieldDefinition { $tableDef.put($a.def.fieldId, $a.def.dataType); } 
+        (',' b=fieldDefinition { $tableDef.put($b.def.fieldId, $b.def.dataType); })*
+    ;
+
+fieldDefinition returns [FieldDef def]
+    :   a=fieldIdentifier b=dataType { $def = new FieldDef($a.fieldId, $b.dtType); }
     ;
 
 values returns [ List<String> valueList ]
@@ -52,13 +90,24 @@ constValue returns [String value]
     |   QUOTED { $value = $QUOTED.text; }
     ;
 
+
+dataType returns [DataType dtType]
+    :   TYPE_INT    {$dtType = DataType.INTEGER; }
+    |   TYPE_STRING {$dtType = DataType.STRING; }
+    ;
+
+TYPE_INT    :   I N T ;
+TYPE_STRING :   S T R I N G ;
+
 KWORD_INSERT  :   I N S E R T ;
-KWORD_NEW     :   N E W ;
+KWORD_CREATE  :   C R E A T E ;
 KWORD_SELECT  :   S E L E C T ;
 
 KWORD_FROM  :   F R O M ;
 KWORD_INTO  :   I N T O ;
 KWORD_VALUES:   V A L U E S ;
+KWORD_TABLE :   T A B L E ;
+KWORD_WITH  :   W I T H ;
 
 fragment A: ('a'|'A');
 fragment B: ('b'|'B');

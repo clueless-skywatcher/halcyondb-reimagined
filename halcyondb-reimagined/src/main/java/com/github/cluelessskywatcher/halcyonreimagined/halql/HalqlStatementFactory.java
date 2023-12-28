@@ -1,14 +1,11 @@
 package com.github.cluelessskywatcher.halcyonreimagined.halql;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.github.cluelessskywatcher.halcyonreimagined.InputBuffer;
-import com.github.cluelessskywatcher.halcyonreimagined.halql.dml.InsertRowStatement;
-import com.github.cluelessskywatcher.halcyonreimagined.halql.dql.SelectTableStatement;
 import com.github.cluelessskywatcher.halcyonreimagined.repl.PrepareResult;
 
 import lombok.Getter;
+
+// Imminent deprecation
 
 @Getter
 public class HalqlStatementFactory {
@@ -21,7 +18,7 @@ public class HalqlStatementFactory {
     }
 
     public PrepareResult prepareStatementFromBuffer(InputBuffer buffer) throws Exception {
-        String bufferContent = buffer.getBuffer();
+        // String bufferContent = buffer.getBuffer();
         
         // if (bufferContent.startsWith("insert")) {
         //     Pattern insertPattern = Pattern.compile("insert into (\\w+) values \\(([^()]*)\\);");

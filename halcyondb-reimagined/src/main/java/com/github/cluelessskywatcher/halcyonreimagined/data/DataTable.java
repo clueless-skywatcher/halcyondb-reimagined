@@ -1,16 +1,9 @@
 package com.github.cluelessskywatcher.halcyonreimagined.data;
 
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.github.cluelessskywatcher.halcyonreimagined.HalcyonDBInstance;
-import com.github.cluelessskywatcher.halcyonreimagined.data.fields.DataField;
-import com.github.cluelessskywatcher.halcyonreimagined.data.fields.IntegerField;
-import com.github.cluelessskywatcher.halcyonreimagined.data.fields.StringField;
-
 import lombok.Getter;
 
 public class DataTable {

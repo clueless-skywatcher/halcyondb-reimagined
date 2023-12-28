@@ -1,6 +1,5 @@
 package com.github.cluelessskywatcher.halcyonreimagined.data;
 
-import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.StringJoiner;

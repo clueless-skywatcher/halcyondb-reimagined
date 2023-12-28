@@ -1,5 +1,9 @@
 // Generated from com/github/cluelessskywatcher/halcyonreimagined/halql/generated/HalcyonQueryLanguage.g4 by ANTLR 4.7.1
 package com.github.cluelessskywatcher.halcyonreimagined.halql.generated;
+
+import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
+import java.util.*;
+
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -68,6 +72,16 @@ public interface HalcyonQueryLanguageListener extends ParseTreeListener {
 	 */
 	void exitInsertRowStatement(HalcyonQueryLanguageParser.InsertRowStatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link HalcyonQueryLanguageParser#createTableStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterCreateTableStatement(HalcyonQueryLanguageParser.CreateTableStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HalcyonQueryLanguageParser#createTableStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitCreateTableStatement(HalcyonQueryLanguageParser.CreateTableStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link HalcyonQueryLanguageParser#selectTableStatement}.
 	 * @param ctx the parse tree
 	 */
@@ -88,6 +102,16 @@ public interface HalcyonQueryLanguageListener extends ParseTreeListener {
 	 */
 	void exitTableIdentifier(HalcyonQueryLanguageParser.TableIdentifierContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link HalcyonQueryLanguageParser#fieldIdentifier}.
+	 * @param ctx the parse tree
+	 */
+	void enterFieldIdentifier(HalcyonQueryLanguageParser.FieldIdentifierContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HalcyonQueryLanguageParser#fieldIdentifier}.
+	 * @param ctx the parse tree
+	 */
+	void exitFieldIdentifier(HalcyonQueryLanguageParser.FieldIdentifierContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link HalcyonQueryLanguageParser#identifier}.
 	 * @param ctx the parse tree
 	 */
@@ -97,6 +121,26 @@ public interface HalcyonQueryLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIdentifier(HalcyonQueryLanguageParser.IdentifierContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HalcyonQueryLanguageParser#tableDefinition}.
+	 * @param ctx the parse tree
+	 */
+	void enterTableDefinition(HalcyonQueryLanguageParser.TableDefinitionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HalcyonQueryLanguageParser#tableDefinition}.
+	 * @param ctx the parse tree
+	 */
+	void exitTableDefinition(HalcyonQueryLanguageParser.TableDefinitionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HalcyonQueryLanguageParser#fieldDefinition}.
+	 * @param ctx the parse tree
+	 */
+	void enterFieldDefinition(HalcyonQueryLanguageParser.FieldDefinitionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HalcyonQueryLanguageParser#fieldDefinition}.
+	 * @param ctx the parse tree
+	 */
+	void exitFieldDefinition(HalcyonQueryLanguageParser.FieldDefinitionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HalcyonQueryLanguageParser#values}.
 	 * @param ctx the parse tree
@@ -117,4 +161,14 @@ public interface HalcyonQueryLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitConstValue(HalcyonQueryLanguageParser.ConstValueContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HalcyonQueryLanguageParser#dataType}.
+	 * @param ctx the parse tree
+	 */
+	void enterDataType(HalcyonQueryLanguageParser.DataTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HalcyonQueryLanguageParser#dataType}.
+	 * @param ctx the parse tree
+	 */
+	void exitDataType(HalcyonQueryLanguageParser.DataTypeContext ctx);
 }

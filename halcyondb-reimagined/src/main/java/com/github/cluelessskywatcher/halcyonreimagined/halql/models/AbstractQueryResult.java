@@ -1,4 +1,4 @@
-package com.github.cluelessskywatcher.halcyonreimagined.models;
+package com.github.cluelessskywatcher.halcyonreimagined.halql.models;
 
 import lombok.Getter;
 import lombok.Setter;

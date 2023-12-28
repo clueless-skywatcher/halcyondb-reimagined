@@ -1,6 +1,6 @@
 package com.github.cluelessskywatcher.halcyonreimagined.halql;
 
-import com.github.cluelessskywatcher.halcyonreimagined.models.AbstractQueryResult;
+import com.github.cluelessskywatcher.halcyonreimagined.halql.models.AbstractQueryResult;
 
 import lombok.Getter;
 import lombok.Setter;

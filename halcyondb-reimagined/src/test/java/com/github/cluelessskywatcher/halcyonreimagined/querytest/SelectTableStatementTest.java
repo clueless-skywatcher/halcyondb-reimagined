@@ -15,7 +15,7 @@ import com.github.cluelessskywatcher.halcyonreimagined.data.fields.DataField;
 import com.github.cluelessskywatcher.halcyonreimagined.data.fields.IntegerField;
 import com.github.cluelessskywatcher.halcyonreimagined.data.fields.StringField;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.dql.SelectTableStatement;
-import com.github.cluelessskywatcher.halcyonreimagined.models.dql.SelectTableResult;
+import com.github.cluelessskywatcher.halcyonreimagined.halql.models.dql.SelectTableResult;
 import com.github.cluelessskywatcher.halcyonreimagined.utils.GeneralUtils;
 import com.github.cluelessskywatcher.halcyonreimagined.utils.TestingBuffer;
 

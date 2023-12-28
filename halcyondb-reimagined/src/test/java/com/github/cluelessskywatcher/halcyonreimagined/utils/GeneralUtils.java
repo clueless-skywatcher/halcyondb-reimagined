@@ -7,10 +7,12 @@ import com.github.cluelessskywatcher.halcyonreimagined.InputBuffer;
 import com.github.cluelessskywatcher.halcyonreimagined.data.Tuple;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.HalqlParserEngine;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.HalqlStatement;
+import com.github.cluelessskywatcher.halcyonreimagined.halql.ddl.CreateTableStatement;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.dml.InsertRowStatement;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.dql.SelectTableStatement;
-import com.github.cluelessskywatcher.halcyonreimagined.models.dml.InsertRowResult;
-import com.github.cluelessskywatcher.halcyonreimagined.models.dql.SelectTableResult;
+import com.github.cluelessskywatcher.halcyonreimagined.halql.models.ddl.CreateTableResult;
+import com.github.cluelessskywatcher.halcyonreimagined.halql.models.dml.InsertRowResult;
+import com.github.cluelessskywatcher.halcyonreimagined.halql.models.dql.SelectTableResult;
 
 public class GeneralUtils {
     public static InsertRowResult invokeInsert(String query, InputBuffer buffer) throws Exception {
@@ -25,6 +27,13 @@ public class GeneralUtils {
         SelectTableStatement statement1 = (SelectTableStatement) HalqlParserEngine.parseQuery(buffer);
         statement1.execute();
         return (SelectTableResult) statement1.getResult();
+    }
+
+    public static CreateTableResult invokeCreate(String query, InputBuffer buffer) throws Exception {
+        buffer.setBuffer(query);
+        CreateTableStatement statement1 = (CreateTableStatement) HalqlParserEngine.parseQuery(buffer);
+        statement1.execute();
+        return (CreateTableResult) statement1.getResult();
     }
 
     public static Class<?> getQueryType(String query, InputBuffer buffer) throws Exception {

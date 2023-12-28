@@ -32,4 +32,8 @@ public class SchemaCatalog {
         nameToTable.put(table.getTableName(), table);
         tableMetadata.put(table, metadata);
     }
+
+    public boolean tableExists(String tableName) {
+        return nameToTable.containsKey(tableName);
+    }
 }

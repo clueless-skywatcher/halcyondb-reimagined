@@ -1,6 +1,10 @@
 // Generated from com/github/cluelessskywatcher/halcyonreimagined/halql/generated/HalcyonQueryLanguage.g4 by ANTLR 4.7.1
 package com.github.cluelessskywatcher.halcyonreimagined.halql.generated;
 
+import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
+import java.util.*;
+
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -88,6 +92,18 @@ public class HalcyonQueryLanguageBaseListener implements HalcyonQueryLanguageLis
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCreateTableStatement(HalcyonQueryLanguageParser.CreateTableStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCreateTableStatement(HalcyonQueryLanguageParser.CreateTableStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterSelectTableStatement(HalcyonQueryLanguageParser.SelectTableStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -112,6 +128,18 @@ public class HalcyonQueryLanguageBaseListener implements HalcyonQueryLanguageLis
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFieldIdentifier(HalcyonQueryLanguageParser.FieldIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFieldIdentifier(HalcyonQueryLanguageParser.FieldIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterIdentifier(HalcyonQueryLanguageParser.IdentifierContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -119,6 +147,30 @@ public class HalcyonQueryLanguageBaseListener implements HalcyonQueryLanguageLis
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIdentifier(HalcyonQueryLanguageParser.IdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTableDefinition(HalcyonQueryLanguageParser.TableDefinitionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTableDefinition(HalcyonQueryLanguageParser.TableDefinitionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFieldDefinition(HalcyonQueryLanguageParser.FieldDefinitionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFieldDefinition(HalcyonQueryLanguageParser.FieldDefinitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -143,6 +195,18 @@ public class HalcyonQueryLanguageBaseListener implements HalcyonQueryLanguageLis
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitConstValue(HalcyonQueryLanguageParser.ConstValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDataType(HalcyonQueryLanguageParser.DataTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDataType(HalcyonQueryLanguageParser.DataTypeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
