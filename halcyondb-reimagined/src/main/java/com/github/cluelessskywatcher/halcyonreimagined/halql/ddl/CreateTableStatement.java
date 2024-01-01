@@ -29,7 +29,13 @@ public class CreateTableStatement extends TableRelatedStatement {
         }
 
         this.tableDescription = new TupleMetadata(types, fieldNames);
-        this.table = new DataTable(this.tableName, tableDescription);
+        try {
+            this.table = new DataTable(this.tableName, tableDescription);
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.result = new CreateTableResult(String.format("Table creation failed: %s", tableName));
+            return;
+        }
     }
 
     @Override

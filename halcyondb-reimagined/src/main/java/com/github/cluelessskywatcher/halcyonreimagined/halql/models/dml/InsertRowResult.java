@@ -23,12 +23,12 @@ public class InsertRowResult extends TableRelatedResult {
         }
         else {
             System.out.println(
-                String.format("Inserted {} rows", 
+                String.format("Inserted %d rows", 
                 rows.length, 
                 getTimeTaken()
             ));
             System.out.println(
-                String.format("Time taken: {} ms", 
+                String.format("Time taken: %f ms", 
                     getTimeTaken()
                 )
             );

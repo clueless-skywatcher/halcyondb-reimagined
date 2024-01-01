@@ -23,7 +23,7 @@ public class SchemaCatalog {
         return nameToTable.get(tableName);
     }
  
-    public void addTable(String tableName, TupleMetadata metadata) {
+    public void addTable(String tableName, TupleMetadata metadata) throws Exception {
         DataTable table = new DataTable(tableName, metadata);
         addTable(table, metadata);
     }

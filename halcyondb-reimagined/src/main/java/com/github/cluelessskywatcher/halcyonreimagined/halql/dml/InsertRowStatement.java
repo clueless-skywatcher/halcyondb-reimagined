@@ -39,7 +39,7 @@ public class InsertRowStatement extends TableRelatedStatement {
                         values.length,
                         tableName,
                         getTableDescription().getFieldCount());
-                setResult(new InsertRowResult(null));
+                setResult(new InsertRowResult(errorMsg));
                 return;
             }
         }

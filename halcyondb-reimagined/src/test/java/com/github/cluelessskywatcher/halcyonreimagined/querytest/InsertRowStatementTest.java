@@ -27,7 +27,7 @@ public class InsertRowStatementTest {
     private TestingBuffer buffer;
     
     @BeforeAll
-    public void setUp() {
+    public void setUp() throws Exception {
         this.buffer = new TestingBuffer();
         
         HalcyonDBInstance.getCatalog().addTable("table1",

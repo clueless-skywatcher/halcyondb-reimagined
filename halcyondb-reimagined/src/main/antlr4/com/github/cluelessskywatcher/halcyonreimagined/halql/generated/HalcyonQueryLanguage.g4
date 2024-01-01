@@ -50,7 +50,7 @@ createTableStatement
     ;
 
 selectTableStatement
-    :   KWORD_SELECT ASTERISK KWORD_FROM tableIdentifier KWORD_WITH '(' tableDefinition ')'
+    :   KWORD_SELECT ASTERISK KWORD_FROM tableIdentifier
     ;
 
 tableIdentifier

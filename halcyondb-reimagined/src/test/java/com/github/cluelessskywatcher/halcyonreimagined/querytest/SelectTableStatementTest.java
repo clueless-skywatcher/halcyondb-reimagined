@@ -25,6 +25,7 @@ public class SelectTableStatementTest {
     
     @BeforeAll
     public void setUp() throws Exception {
+        HalcyonDBInstance.reset();
         this.buffer = new TestingBuffer();
         
         HalcyonDBInstance.getCatalog().addTable("table1",

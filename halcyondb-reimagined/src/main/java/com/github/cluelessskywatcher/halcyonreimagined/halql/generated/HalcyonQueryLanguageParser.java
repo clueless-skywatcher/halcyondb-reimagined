@@ -489,10 +489,6 @@ public class HalcyonQueryLanguageParser extends Parser {
 		public TableIdentifierContext tableIdentifier() {
 			return getRuleContext(TableIdentifierContext.class,0);
 		}
-		public TerminalNode KWORD_WITH() { return getToken(HalcyonQueryLanguageParser.KWORD_WITH, 0); }
-		public TableDefinitionContext tableDefinition() {
-			return getRuleContext(TableDefinitionContext.class,0);
-		}
 		public SelectTableStatementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -526,14 +522,6 @@ public class HalcyonQueryLanguageParser extends Parser {
 			match(KWORD_FROM);
 			setState(65);
 			tableIdentifier();
-			setState(66);
-			match(KWORD_WITH);
-			setState(67);
-			match(T__1);
-			setState(68);
-			tableDefinition();
-			setState(69);
-			match(T__2);
 			}
 		}
 		catch (RecognitionException re) {
@@ -576,7 +564,7 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(71);
+			setState(67);
 			identifier();
 			}
 		}
@@ -620,7 +608,7 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(73);
+			setState(69);
 			((FieldIdentifierContext)_localctx).IDENTIFIER = match(IDENTIFIER);
 			 ((FieldIdentifierContext)_localctx).fieldId =  (((FieldIdentifierContext)_localctx).IDENTIFIER!=null?((FieldIdentifierContext)_localctx).IDENTIFIER.getText():null); 
 			}
@@ -664,24 +652,24 @@ public class HalcyonQueryLanguageParser extends Parser {
 		IdentifierContext _localctx = new IdentifierContext(_ctx, getState());
 		enterRule(_localctx, 20, RULE_identifier);
 		try {
-			setState(80);
+			setState(76);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(76);
+				setState(72);
 				match(IDENTIFIER);
-				setState(77);
+				setState(73);
 				match(T__3);
-				setState(78);
+				setState(74);
 				match(IDENTIFIER);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(79);
+				setState(75);
 				match(IDENTIFIER);
 				}
 				break;
@@ -737,23 +725,23 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(82);
+			setState(78);
 			((TableDefinitionContext)_localctx).a = fieldDefinition();
 			 _localctx.tableDef.put(((TableDefinitionContext)_localctx).a.def.fieldId, ((TableDefinitionContext)_localctx).a.def.dataType); 
-			setState(90);
+			setState(86);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__4) {
 				{
 				{
-				setState(84);
+				setState(80);
 				match(T__4);
-				setState(85);
+				setState(81);
 				((TableDefinitionContext)_localctx).b = fieldDefinition();
 				 _localctx.tableDef.put(((TableDefinitionContext)_localctx).b.def.fieldId, ((TableDefinitionContext)_localctx).b.def.dataType); 
 				}
 				}
-				setState(92);
+				setState(88);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -805,9 +793,9 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(93);
+			setState(89);
 			((FieldDefinitionContext)_localctx).a = fieldIdentifier();
-			setState(94);
+			setState(90);
 			((FieldDefinitionContext)_localctx).b = dataType();
 			 ((FieldDefinitionContext)_localctx).def =  new FieldDef(((FieldDefinitionContext)_localctx).a.fieldId, ((FieldDefinitionContext)_localctx).b.dtType); 
 			}
@@ -862,23 +850,23 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(97);
+			setState(93);
 			((ValuesContext)_localctx).a = constValue();
 			 _localctx.valueList.add(((ValuesContext)_localctx).a.value); 
-			setState(105);
+			setState(101);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__4) {
 				{
 				{
-				setState(99);
+				setState(95);
 				match(T__4);
-				setState(100);
+				setState(96);
 				((ValuesContext)_localctx).b = constValue();
 				 _localctx.valueList.add(((ValuesContext)_localctx).b.value); 
 				}
 				}
-				setState(107);
+				setState(103);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -924,13 +912,13 @@ public class HalcyonQueryLanguageParser extends Parser {
 		ConstValueContext _localctx = new ConstValueContext(_ctx, getState());
 		enterRule(_localctx, 28, RULE_constValue);
 		try {
-			setState(112);
+			setState(108);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case NUMBER:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(108);
+				setState(104);
 				((ConstValueContext)_localctx).NUMBER = match(NUMBER);
 				 ((ConstValueContext)_localctx).value =  (((ConstValueContext)_localctx).NUMBER!=null?((ConstValueContext)_localctx).NUMBER.getText():null); 
 				}
@@ -938,7 +926,7 @@ public class HalcyonQueryLanguageParser extends Parser {
 			case QUOTED:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(110);
+				setState(106);
 				((ConstValueContext)_localctx).QUOTED = match(QUOTED);
 				 ((ConstValueContext)_localctx).value =  (((ConstValueContext)_localctx).QUOTED!=null?((ConstValueContext)_localctx).QUOTED.getText():null); 
 				}
@@ -985,13 +973,13 @@ public class HalcyonQueryLanguageParser extends Parser {
 		DataTypeContext _localctx = new DataTypeContext(_ctx, getState());
 		enterRule(_localctx, 30, RULE_dataType);
 		try {
-			setState(118);
+			setState(114);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case TYPE_INT:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(114);
+				setState(110);
 				match(TYPE_INT);
 				((DataTypeContext)_localctx).dtType =  DataType.INTEGER; 
 				}
@@ -999,7 +987,7 @@ public class HalcyonQueryLanguageParser extends Parser {
 			case TYPE_STRING:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(116);
+				setState(112);
 				match(TYPE_STRING);
 				((DataTypeContext)_localctx).dtType =  DataType.STRING; 
 				}
@@ -1020,34 +1008,33 @@ public class HalcyonQueryLanguageParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\31{\4\2\t\2\4\3\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\31w\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4"+
 		"\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\3\2\3\2\3\2\3\3"+
 		"\3\3\3\3\5\3)\n\3\3\4\3\4\3\5\3\5\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7"+
-		"\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3"+
-		"\t\3\n\3\n\3\13\3\13\3\13\3\f\3\f\3\f\3\f\5\fS\n\f\3\r\3\r\3\r\3\r\3\r"+
-		"\3\r\7\r[\n\r\f\r\16\r^\13\r\3\16\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3"+
-		"\17\3\17\7\17j\n\17\f\17\16\17m\13\17\3\20\3\20\3\20\3\20\5\20s\n\20\3"+
-		"\21\3\21\3\21\3\21\5\21y\n\21\3\21\2\2\22\2\4\6\b\n\f\16\20\22\24\26\30"+
-		"\32\34\36 \2\2\2q\2\"\3\2\2\2\4(\3\2\2\2\6*\3\2\2\2\b,\3\2\2\2\n.\3\2"+
-		"\2\2\f\60\3\2\2\2\168\3\2\2\2\20@\3\2\2\2\22I\3\2\2\2\24K\3\2\2\2\26R"+
-		"\3\2\2\2\30T\3\2\2\2\32_\3\2\2\2\34c\3\2\2\2\36r\3\2\2\2 x\3\2\2\2\"#"+
-		"\5\4\3\2#$\7\3\2\2$\3\3\2\2\2%)\5\6\4\2&)\5\b\5\2\')\5\n\6\2(%\3\2\2\2"+
-		"(&\3\2\2\2(\'\3\2\2\2)\5\3\2\2\2*+\5\f\7\2+\7\3\2\2\2,-\5\16\b\2-\t\3"+
-		"\2\2\2./\5\20\t\2/\13\3\2\2\2\60\61\7\n\2\2\61\62\7\16\2\2\62\63\5\22"+
-		"\n\2\63\64\7\17\2\2\64\65\7\4\2\2\65\66\5\34\17\2\66\67\7\5\2\2\67\r\3"+
-		"\2\2\289\7\13\2\29:\7\20\2\2:;\5\22\n\2;<\7\21\2\2<=\7\4\2\2=>\5\30\r"+
-		"\2>?\7\5\2\2?\17\3\2\2\2@A\7\f\2\2AB\7\23\2\2BC\7\r\2\2CD\5\22\n\2DE\7"+
-		"\21\2\2EF\7\4\2\2FG\5\30\r\2GH\7\5\2\2H\21\3\2\2\2IJ\5\26\f\2J\23\3\2"+
-		"\2\2KL\7\24\2\2LM\b\13\1\2M\25\3\2\2\2NO\7\24\2\2OP\7\6\2\2PS\7\24\2\2"+
-		"QS\7\24\2\2RN\3\2\2\2RQ\3\2\2\2S\27\3\2\2\2TU\5\32\16\2U\\\b\r\1\2VW\7"+
-		"\7\2\2WX\5\32\16\2XY\b\r\1\2Y[\3\2\2\2ZV\3\2\2\2[^\3\2\2\2\\Z\3\2\2\2"+
-		"\\]\3\2\2\2]\31\3\2\2\2^\\\3\2\2\2_`\5\24\13\2`a\5 \21\2ab\b\16\1\2b\33"+
-		"\3\2\2\2cd\5\36\20\2dk\b\17\1\2ef\7\7\2\2fg\5\36\20\2gh\b\17\1\2hj\3\2"+
-		"\2\2ie\3\2\2\2jm\3\2\2\2ki\3\2\2\2kl\3\2\2\2l\35\3\2\2\2mk\3\2\2\2no\7"+
-		"\26\2\2os\b\20\1\2pq\7\25\2\2qs\b\20\1\2rn\3\2\2\2rp\3\2\2\2s\37\3\2\2"+
-		"\2tu\7\b\2\2uy\b\21\1\2vw\7\t\2\2wy\b\21\1\2xt\3\2\2\2xv\3\2\2\2y!\3\2"+
-		"\2\2\b(R\\krx";
+		"\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\n\3\n\3\13"+
+		"\3\13\3\13\3\f\3\f\3\f\3\f\5\fO\n\f\3\r\3\r\3\r\3\r\3\r\3\r\7\rW\n\r\f"+
+		"\r\16\rZ\13\r\3\16\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3\17\3\17\7\17f"+
+		"\n\17\f\17\16\17i\13\17\3\20\3\20\3\20\3\20\5\20o\n\20\3\21\3\21\3\21"+
+		"\3\21\5\21u\n\21\3\21\2\2\22\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \2"+
+		"\2\2m\2\"\3\2\2\2\4(\3\2\2\2\6*\3\2\2\2\b,\3\2\2\2\n.\3\2\2\2\f\60\3\2"+
+		"\2\2\168\3\2\2\2\20@\3\2\2\2\22E\3\2\2\2\24G\3\2\2\2\26N\3\2\2\2\30P\3"+
+		"\2\2\2\32[\3\2\2\2\34_\3\2\2\2\36n\3\2\2\2 t\3\2\2\2\"#\5\4\3\2#$\7\3"+
+		"\2\2$\3\3\2\2\2%)\5\6\4\2&)\5\b\5\2\')\5\n\6\2(%\3\2\2\2(&\3\2\2\2(\'"+
+		"\3\2\2\2)\5\3\2\2\2*+\5\f\7\2+\7\3\2\2\2,-\5\16\b\2-\t\3\2\2\2./\5\20"+
+		"\t\2/\13\3\2\2\2\60\61\7\n\2\2\61\62\7\16\2\2\62\63\5\22\n\2\63\64\7\17"+
+		"\2\2\64\65\7\4\2\2\65\66\5\34\17\2\66\67\7\5\2\2\67\r\3\2\2\289\7\13\2"+
+		"\29:\7\20\2\2:;\5\22\n\2;<\7\21\2\2<=\7\4\2\2=>\5\30\r\2>?\7\5\2\2?\17"+
+		"\3\2\2\2@A\7\f\2\2AB\7\23\2\2BC\7\r\2\2CD\5\22\n\2D\21\3\2\2\2EF\5\26"+
+		"\f\2F\23\3\2\2\2GH\7\24\2\2HI\b\13\1\2I\25\3\2\2\2JK\7\24\2\2KL\7\6\2"+
+		"\2LO\7\24\2\2MO\7\24\2\2NJ\3\2\2\2NM\3\2\2\2O\27\3\2\2\2PQ\5\32\16\2Q"+
+		"X\b\r\1\2RS\7\7\2\2ST\5\32\16\2TU\b\r\1\2UW\3\2\2\2VR\3\2\2\2WZ\3\2\2"+
+		"\2XV\3\2\2\2XY\3\2\2\2Y\31\3\2\2\2ZX\3\2\2\2[\\\5\24\13\2\\]\5 \21\2]"+
+		"^\b\16\1\2^\33\3\2\2\2_`\5\36\20\2`g\b\17\1\2ab\7\7\2\2bc\5\36\20\2cd"+
+		"\b\17\1\2df\3\2\2\2ea\3\2\2\2fi\3\2\2\2ge\3\2\2\2gh\3\2\2\2h\35\3\2\2"+
+		"\2ig\3\2\2\2jk\7\26\2\2ko\b\20\1\2lm\7\25\2\2mo\b\20\1\2nj\3\2\2\2nl\3"+
+		"\2\2\2o\37\3\2\2\2pq\7\b\2\2qu\b\21\1\2rs\7\t\2\2su\b\21\1\2tp\3\2\2\2"+
+		"tr\3\2\2\2u!\3\2\2\2\b(NXgnt";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

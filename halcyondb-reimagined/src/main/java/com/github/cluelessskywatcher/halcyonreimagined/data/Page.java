@@ -4,7 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.Arrays;
 
 import com.github.cluelessskywatcher.halcyonreimagined.data.fields.DataField;
@@ -12,13 +14,14 @@ import com.github.cluelessskywatcher.halcyonreimagined.data.fields.IntegerField;
 import com.github.cluelessskywatcher.halcyonreimagined.data.fields.StringField;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class Page {
-    private @Getter byte[] content;
+    private @Getter @Setter byte[] content;
     private @Getter TupleMetadata metadata;
     // Header contains the bits, each denoting whether the particular
     // row is empty or not.
-    private byte[] header;
+    private @Getter @Setter byte[] header;
     
     public Page(TupleMetadata metadata) throws Exception {
         if (metadata.getTotalSize() > DataConstants.PAGE_SIZE) {
@@ -137,5 +140,29 @@ public class Page {
         }
 
         return Tuple.construct(fields, metadata);
+    }
+
+    public int getPageRowCount() {
+        return getMaxRows() - getNumEmptySlots();
+    }
+
+    public static Page readFromDisk(File file, TupleMetadata metadata, int offset) throws Exception {
+        RandomAccessFile raf = new RandomAccessFile(file, "r");
+
+        Page page = new Page(metadata);
+        
+        raf.seek(offset);
+
+        byte[] header = new byte[page.getHeaderSize()];
+        raf.read(header);
+        page.setHeader(header);
+        
+        byte[] content = new byte[DataConstants.PAGE_SIZE];
+        raf.read(content);
+        page.setContent(content);
+
+        raf.close();
+
+        return page;
     }
 }

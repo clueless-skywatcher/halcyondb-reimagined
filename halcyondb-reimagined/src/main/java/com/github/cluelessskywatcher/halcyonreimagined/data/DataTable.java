@@ -1,5 +1,7 @@
 package com.github.cluelessskywatcher.halcyonreimagined.data;
 
+import java.io.File;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,71 +12,89 @@ public class DataTable {
     private Page[] pages;
     private @Getter String tableName;
     private @Getter TupleMetadata metadata;
-    private @Getter int rowCount;
+    private @Getter File file;
     
-    public DataTable(String tableName) {
+    public DataTable(String tableName) throws Exception {
         this.pages = new Page[DataConstants.MAX_PAGES_IN_TABLE];
         this.tableName = tableName;
         this.metadata = HalcyonDBInstance.getCatalog().getTableMetadata(tableName);
-        this.rowCount = 0;
+        this.file = new File(String.format("/tmp/halcyon/data/%s.dat", tableName));
+        if (!this.file.exists()) {
+            this.file.getParentFile().mkdirs();
+            this.file.createNewFile();
+        }
     }
 
-    public DataTable(String tableName, TupleMetadata metadata) {
+    public DataTable(String tableName, TupleMetadata metadata) throws Exception {
         this.pages = new Page[DataConstants.MAX_PAGES_IN_TABLE];
         this.tableName = tableName;
         this.metadata = metadata;
-        this.rowCount = 0;
+        this.file = new File(String.format("/tmp/halcyon/data/%s.dat", tableName));
+        if (!this.file.exists()) {
+            this.file.getParentFile().mkdirs();
+            this.file.createNewFile();
+        }
     }
 
     public void insert(Tuple tuple) throws Exception {
-        // Find the first page which has empty slots or is null
-        // If page is null, make one, then we prepare to add
-        // data in that page (because a newly created page will)
-        // always have empty slots. In this way, it will always
-        // append new data
         int i = 0;
+
+        // Iterate over the page list until we get a 
+        // null page or a page with empty rows
         while (i < pages.length) {
-            if (pages[i] == null) {
-                break;
-            }
-            else if (pages[i].getNumEmptySlots() > 0) {
-                break;
-            }
+            if (pages[i] == null || pages[i].getNumEmptySlots() > 0) break;
             i++;
-        }
-        
-        if (i >= pages.length) {
-            throw new Exception("Table is full. Cannot add more tuples");
         }
 
         if (pages[i] == null) {
-            Page page = new Page(metadata);
-            page.insert(tuple);
-            pages[i] = page;
-        }
-        else {
+            // If page is null, we read that page from disk, then insert the tuple
+            // in that page. Disk flushes are yet to occur.
+            pages[i] = Page.readFromDisk(file, metadata, i * DataConstants.PAGE_SIZE);
             pages[i].insert(tuple);
         }
-        rowCount++;
+        else {
+            // Otherwise we check if the page has any empty slots to insert a row.
+            // If yes, we insert it. If no, throw an exception since i is supposed to
+            // denote the page which should have an empty slot
+            if (pages[i].getNumEmptySlots() > 0) {
+                pages[i].insert(tuple);
+            }
+            else {
+                throw new Exception(String.format("Table %s is full", tableName));
+            }
+        }
+        // We are flushing the page to disk for every insert.
+        // TODO: Think of a better approach (maybe a transactional approach)
+        // when saving data
+        flushToDisk(pages[i], file, i * DataConstants.PAGE_SIZE);
+    }
+
+    private void flushToDisk(Page page, File file, int offset) throws Exception {
+        RandomAccessFile raf = new RandomAccessFile(file, "rw");
+        raf.seek(offset);
+        raf.write(page.getHeader());
+        raf.write(page.getContent());
+        raf.close();
     }
 
     public List<Tuple> selectAll() throws Exception {
+        // Since we need to select all rows, we need to populate
+        // the page list
         List<Tuple> results = new ArrayList<>();
-        int pageIdx = 0;
-        while (pageIdx < pages.length) {
-            if (results.size() == getRowCount()) {
-                break;
-            }
-            Page page = pages[pageIdx];
-            if (page != null) {
-                for (int i = 0; i < page.getMaxRows(); i++) {
-                    if (page.hasValue(i)) {
-                        results.add(page.deserialize(i));
-                    }
-                }
-            } 
-            pageIdx++;
+
+        for (int i = 0; i < pages.length; i++) {
+            pages[i] = Page.readFromDisk(file, metadata, i * DataConstants.PAGE_SIZE);
         }
+
+        for (int i = 0; i < pages.length; i++) {
+            Page page = pages[i];
+            for (int j = 0; j < page.getMaxRows(); j++) {
+                if (page.hasValue(j)) {
+                    results.add(page.deserialize(j));
+                }
+            }
+        }
+
         return results;
     }
 
