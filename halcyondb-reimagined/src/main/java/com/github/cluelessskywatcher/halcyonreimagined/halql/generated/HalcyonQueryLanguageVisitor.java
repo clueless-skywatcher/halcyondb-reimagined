@@ -1,9 +1,6 @@
 // Generated from com/github/cluelessskywatcher/halcyonreimagined/halql/generated/HalcyonQueryLanguage.g4 by ANTLR 4.7.1
 package com.github.cluelessskywatcher.halcyonreimagined.halql.generated;
 
-import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
-import java.util.*;
-
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
