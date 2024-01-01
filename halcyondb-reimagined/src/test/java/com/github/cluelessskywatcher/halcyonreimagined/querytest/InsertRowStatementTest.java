@@ -19,6 +19,7 @@ import com.github.cluelessskywatcher.halcyonreimagined.data.fields.StringField;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.HalqlParserEngine;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.HalqlStatement;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.dml.InsertRowStatement;
+import com.github.cluelessskywatcher.halcyonreimagined.utils.GeneralUtils;
 import com.github.cluelessskywatcher.halcyonreimagined.utils.InsertRowUtils;
 import com.github.cluelessskywatcher.halcyonreimagined.utils.TestingBuffer;
 
@@ -46,7 +47,7 @@ public class InsertRowStatementTest {
 
     @AfterAll
     public void shutDown() {
-        HalcyonDBInstance.reset();
+        HalcyonDBInstance.factoryReset();
     }
 
     @Test
@@ -95,5 +96,57 @@ public class InsertRowStatementTest {
             "table2",
             fields
         );
+    }
+
+    @Test
+    public void testRowCount() throws Exception {
+        HalcyonDBInstance.factoryReset();
+        this.buffer = new TestingBuffer();
+        
+        HalcyonDBInstance.getCatalog().addTable("table1",
+            new TupleMetadata(
+                new DataType[] {DataType.INTEGER, DataType.INTEGER},
+                new String[] {"field1", "field2"}
+            )
+        );
+        HalcyonDBInstance.getCatalog().addTable("table2",
+            new TupleMetadata(
+                new DataType[] {DataType.STRING, DataType.STRING, DataType.STRING},
+                new String[] {"field1", "field2", "field3"}
+            )
+        );
+        
+        GeneralUtils.invokeInsert("insert into table1 values (1, 2);", buffer);
+        Assertions.assertEquals(HalcyonDBInstance.getCatalog().getTable("table1").getRowCount(), 1);
+        GeneralUtils.invokeInsert("insert into table1 values (2, 3);", buffer);
+        Assertions.assertEquals(HalcyonDBInstance.getCatalog().getTable("table1").getRowCount(), 2);
+        GeneralUtils.invokeInsert("insert into table1 values (3, 11);", buffer);
+        Assertions.assertEquals(HalcyonDBInstance.getCatalog().getTable("table1").getRowCount(), 3);
+
+        GeneralUtils.invokeInsert("insert into table2 values (\"This\", \"is\", \"Sentence1\");", buffer);
+        Assertions.assertEquals(HalcyonDBInstance.getCatalog().getTable("table2").getRowCount(), 1);
+        GeneralUtils.invokeInsert("insert into table2 values (\"This\", \"is\", \"Sentence2\");", buffer);
+        Assertions.assertEquals(HalcyonDBInstance.getCatalog().getTable("table2").getRowCount(), 2);
+        GeneralUtils.invokeInsert("insert into table2 values (\"This\", \"is\", \"Sentence3\");", buffer);
+        Assertions.assertEquals(HalcyonDBInstance.getCatalog().getTable("table2").getRowCount(), 3);        
+    
+        HalcyonDBInstance.softReset();
+        this.buffer = new TestingBuffer();
+        
+        HalcyonDBInstance.getCatalog().addTable("table1",
+            new TupleMetadata(
+                new DataType[] {DataType.INTEGER, DataType.INTEGER},
+                new String[] {"field1", "field2"}
+            )
+        );
+        HalcyonDBInstance.getCatalog().addTable("table2",
+            new TupleMetadata(
+                new DataType[] {DataType.STRING, DataType.STRING, DataType.STRING},
+                new String[] {"field1", "field2", "field3"}
+            )
+        );
+
+        Assertions.assertEquals(HalcyonDBInstance.getCatalog().getTable("table1").getRowCount(), 3);
+        Assertions.assertEquals(HalcyonDBInstance.getCatalog().getTable("table2").getRowCount(), 3);
     }
 }

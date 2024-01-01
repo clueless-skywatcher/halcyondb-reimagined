@@ -92,16 +92,13 @@ public class Page {
         }
     }
 
-    // Get the first slot that has no tuples stored
-    // Also, for every slot shift, there will be an increase
-    // of the content offset by the size of a row
-    public void insert(Tuple tuple) throws IOException {
-        int i = 0;
-        int contentOffset = 0;
-        while (i < getMaxRows()) {
-            if (!hasValue(i)) break;
-            i++;
-            contentOffset += metadata.getTotalSize();
+    public void insertAt(Tuple tuple, int pos) throws Exception {
+        /*
+         * Insertion should only occur in positions that are multiples
+         * of the row size so that one can write the row to that position
+         */
+        if (pos % metadata.getTotalSize() != 0) {
+            throw new Exception("Position to write should be a multiple of the row size");
         }
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -109,9 +106,9 @@ public class Page {
         tuple.serialize(dos);
         byte[] tupleBytes = baos.toByteArray();
 
-        System.arraycopy(tupleBytes, 0, content, contentOffset, tupleBytes.length);
+        System.arraycopy(tupleBytes, 0, content, pos, tupleBytes.length);
 
-        setRow(i, true);
+        setRow(pos / metadata.getTotalSize(), true);
     }
 
     public Tuple deserialize(int row) throws Exception {

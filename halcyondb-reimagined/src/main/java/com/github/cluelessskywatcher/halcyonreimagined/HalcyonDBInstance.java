@@ -15,8 +15,18 @@ public class HalcyonDBInstance {
         return instance.catalog;
     }
 
-    public static void reset() {
+    public static void factoryReset() {
+        /*
+         * Reset the database instance and delete all database files
+         */
         clearAllFiles();
+        instance = new HalcyonDBInstance();
+    }
+
+    public static void softReset() {
+        /*
+         * Reset the database instance without deleting the database files
+         */
         instance = new HalcyonDBInstance();
     }
 

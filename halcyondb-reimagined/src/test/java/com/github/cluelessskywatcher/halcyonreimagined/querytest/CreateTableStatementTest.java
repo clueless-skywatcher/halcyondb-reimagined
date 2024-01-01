@@ -25,7 +25,7 @@ public class CreateTableStatementTest {
 
     @AfterAll
     public void shutDown() {
-        HalcyonDBInstance.reset();
+        HalcyonDBInstance.factoryReset();
     }
     
     @Test

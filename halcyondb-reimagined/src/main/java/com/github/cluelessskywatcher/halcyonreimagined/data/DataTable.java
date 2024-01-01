@@ -7,12 +7,14 @@ import java.util.List;
 
 import com.github.cluelessskywatcher.halcyonreimagined.HalcyonDBInstance;
 import lombok.Getter;
+import lombok.Setter;
 
 public class DataTable {
     private Page[] pages;
     private @Getter String tableName;
     private @Getter TupleMetadata metadata;
     private @Getter File file;
+    private @Getter @Setter int rowCount;
     
     public DataTable(String tableName) throws Exception {
         this.pages = new Page[DataConstants.MAX_PAGES_IN_TABLE];
@@ -23,6 +25,7 @@ public class DataTable {
             this.file.getParentFile().mkdirs();
             this.file.createNewFile();
         }
+        reevaluateRowCount();
     }
 
     public DataTable(String tableName, TupleMetadata metadata) throws Exception {
@@ -34,39 +37,33 @@ public class DataTable {
             this.file.getParentFile().mkdirs();
             this.file.createNewFile();
         }
+        reevaluateRowCount();
+    }
+
+    public void reevaluateRowCount() throws Exception {
+        int rc = 0;
+
+        for (int i = 0; i < DataConstants.MAX_PAGES_IN_TABLE; i++) {
+            Page page = Page.readFromDisk(file, metadata, i * DataConstants.PAGE_SIZE);
+            rc += page.getPageRowCount();
+        }
+
+        this.rowCount = rc;
     }
 
     public void insert(Tuple tuple) throws Exception {
-        int i = 0;
-
-        // Iterate over the page list until we get a 
-        // null page or a page with empty rows
-        while (i < pages.length) {
-            if (pages[i] == null || pages[i].getNumEmptySlots() > 0) break;
-            i++;
+        DataCursor cursor = endCursor();
+        int pageNum = cursor.getRowNum() / getMaxRowsPerPage();
+        
+        if (pages[pageNum] == null) {
+            pages[pageNum] = Page.readFromDisk(file, metadata, pageNum * DataConstants.PAGE_SIZE);
         }
 
-        if (pages[i] == null) {
-            // If page is null, we read that page from disk, then insert the tuple
-            // in that page. Disk flushes are yet to occur.
-            pages[i] = Page.readFromDisk(file, metadata, i * DataConstants.PAGE_SIZE);
-            pages[i].insert(tuple);
-        }
-        else {
-            // Otherwise we check if the page has any empty slots to insert a row.
-            // If yes, we insert it. If no, throw an exception since i is supposed to
-            // denote the page which should have an empty slot
-            if (pages[i].getNumEmptySlots() > 0) {
-                pages[i].insert(tuple);
-            }
-            else {
-                throw new Exception(String.format("Table %s is full", tableName));
-            }
-        }
-        // We are flushing the page to disk for every insert.
-        // TODO: Think of a better approach (maybe a transactional approach)
-        // when saving data
-        flushToDisk(pages[i], file, i * DataConstants.PAGE_SIZE);
+        int rowOffset = cursor.getRowNum() % getMaxRowsPerPage();
+        pages[pageNum].insertAt(tuple, rowOffset * metadata.getTotalSize());
+
+        flushToDisk(pages[pageNum], file, pageNum * DataConstants.PAGE_SIZE);
+        rowCount++;
     }
 
     private void flushToDisk(Page page, File file, int offset) throws Exception {
@@ -78,21 +75,13 @@ public class DataTable {
     }
 
     public List<Tuple> selectAll() throws Exception {
-        // Since we need to select all rows, we need to populate
-        // the page list
+        DataCursor cursor = startCursor();
+        
         List<Tuple> results = new ArrayList<>();
 
-        for (int i = 0; i < pages.length; i++) {
-            pages[i] = Page.readFromDisk(file, metadata, i * DataConstants.PAGE_SIZE);
-        }
-
-        for (int i = 0; i < pages.length; i++) {
-            Page page = pages[i];
-            for (int j = 0; j < page.getMaxRows(); j++) {
-                if (page.hasValue(j)) {
-                    results.add(page.deserialize(j));
-                }
-            }
+        while (!cursor.isEndOfTable()) {
+            results.add(getRowFromCursor(cursor));
+            cursor = nextCursor(cursor);
         }
 
         return results;
@@ -100,5 +89,50 @@ public class DataTable {
 
     public int hashCode() {
         return this.tableName.hashCode();
+    }
+
+    public int getMaxRowsPerPage() {
+        return (DataConstants.PAGE_SIZE * 8) / (metadata.getTotalSize() * 8 + 1);
+    }
+
+    public Tuple getRowFromCursor(DataCursor cursor) throws Exception {
+        int pageNum = cursor.getRowNum() / getMaxRowsPerPage();
+        if (pages[pageNum] == null) {
+            pages[pageNum] = Page.readFromDisk(file, metadata, pageNum * DataConstants.PAGE_SIZE);
+        }
+        return pages[pageNum].deserialize(cursor.getRowNum() % getMaxRowsPerPage());
+    }
+
+    public void insertFromCursor(DataCursor cursor, Tuple tuple) throws Exception {
+        int pageNum = cursor.getRowNum() / getMaxRowsPerPage();
+        if (pages[pageNum] == null) {
+            pages[pageNum] = Page.readFromDisk(file, metadata, pageNum * DataConstants.PAGE_SIZE);
+        }
+        int rowOffset = cursor.getRowNum() % getMaxRowsPerPage();
+
+        if (!pages[pageNum].hasValue(rowOffset)) {
+            pages[pageNum].insertAt(tuple, rowOffset * metadata.getTotalSize());
+        }
+        else {
+            throw new Exception(String.format("Cannot insert to row %d. Aborting...", cursor.getRowNum()));
+        }
+    }
+
+    public DataCursor nextCursor(DataCursor cursor) {
+        DataCursor resultCursor = new DataCursor(this, cursor.getRowNum() + 1, false);
+        if (resultCursor.getRowNum() == getRowCount()) {
+            resultCursor.setEndOfTable(true);
+        }
+        return resultCursor;
+    }
+
+    public DataCursor startCursor() {
+        DataCursor cursor = new DataCursor(this, 0, rowCount == 0);
+        return cursor;
+    }
+
+    public DataCursor endCursor() {
+        DataCursor cursor = new DataCursor(this, rowCount, true);
+        return cursor;
     }
 }
