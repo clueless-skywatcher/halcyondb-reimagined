@@ -117,7 +117,7 @@ public class Page {
         DataInputStream dais = new DataInputStream(bais);
 
         DataField[] fields = new DataField[metadata.getFieldCount()];
-
+        long key = dais.readLong();
         for (int i = 0; i < fields.length; i++) {
             if (metadata.getTypeAt(i) == DataType.INTEGER) {
                 int value = dais.readInt();
@@ -135,7 +135,7 @@ public class Page {
             }
         }
 
-        return Tuple.construct(fields, metadata);
+        return Tuple.construct(fields, metadata, key);
     }
 
     public int getPageRowCount() {

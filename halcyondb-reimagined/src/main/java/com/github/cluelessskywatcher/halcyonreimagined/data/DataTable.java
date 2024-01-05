@@ -15,6 +15,7 @@ public class DataTable {
     private @Getter TupleMetadata metadata;
     private @Getter File file;
     private @Getter @Setter int rowCount;
+    private @Getter long lastRowSequenceId;
     
     public DataTable(String tableName) throws Exception {
         this.pages = new Page[DataConstants.MAX_PAGES_IN_TABLE];

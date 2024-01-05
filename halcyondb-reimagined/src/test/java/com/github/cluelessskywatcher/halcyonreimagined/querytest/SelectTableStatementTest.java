@@ -76,21 +76,24 @@ public class SelectTableStatementTest {
                     new IntegerField(1),
                     new IntegerField(2)
                 }, 
-                metadata
+                metadata,
+                0
             ),
             Tuple.construct(
                 new DataField[] {
                     new IntegerField(2),
                     new IntegerField(3)
                 }, 
-                metadata
+                metadata,
+                1
             ),
             Tuple.construct(
                 new DataField[] {
                     new IntegerField(3),
                     new IntegerField(11)
                 }, 
-                metadata
+                metadata,
+                2
             )
         };
         SelectTableResult result = GeneralUtils.invokeSelect("select * from table1;", buffer);
@@ -112,7 +115,8 @@ public class SelectTableStatementTest {
                     new StringField("is"),
                     new StringField("Sentence1")
                 }, 
-                metadata
+                metadata,
+                3
             ),
             Tuple.construct(
                 new DataField[] {
@@ -120,7 +124,8 @@ public class SelectTableStatementTest {
                     new StringField("is"),
                     new StringField("Sentence2")
                 },
-                metadata
+                metadata,
+                4
             ),
             Tuple.construct(
                 new DataField[] {
@@ -128,7 +133,8 @@ public class SelectTableStatementTest {
                     new StringField("is"),
                     new StringField("Sentence3")
                 },
-                metadata
+                metadata,
+                5
             )
         };
         SelectTableResult result = GeneralUtils.invokeSelect("select * from table2;", buffer);

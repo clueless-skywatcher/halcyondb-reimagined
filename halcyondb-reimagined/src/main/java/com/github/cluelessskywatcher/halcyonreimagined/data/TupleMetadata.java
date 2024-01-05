@@ -32,7 +32,7 @@ public class TupleMetadata {
     }
 
     public int getTotalSize() {
-        int totalSize = 0;
+        int totalSize = Long.SIZE;
         for (int i = 0; i < types.length; i++) {
             totalSize += types[i].getSize();
         }

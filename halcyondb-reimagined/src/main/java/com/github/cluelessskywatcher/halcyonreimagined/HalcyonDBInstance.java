@@ -2,17 +2,25 @@ package com.github.cluelessskywatcher.halcyonreimagined;
 
 import java.io.File;
 
+import com.github.cluelessskywatcher.halcyonreimagined.data.TupleSequence;
+
 public class HalcyonDBInstance {
     private static HalcyonDBInstance instance = new HalcyonDBInstance();
     
     private SchemaCatalog catalog;
+    private TupleSequence globaTupleSequence;
 
     private HalcyonDBInstance() {
         catalog = new SchemaCatalog();
+        globaTupleSequence = new TupleSequence(0);
     }
 
     public static SchemaCatalog getCatalog() {
         return instance.catalog;
+    }
+
+    public static long getNextId() {
+        return instance.globaTupleSequence.getNextInSequence();
     }
 
     public static void factoryReset() {
