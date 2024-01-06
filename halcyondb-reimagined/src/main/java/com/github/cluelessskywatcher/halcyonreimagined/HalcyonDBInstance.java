@@ -6,7 +6,9 @@ import com.github.cluelessskywatcher.halcyonreimagined.data.TupleSequence;
 
 public class HalcyonDBInstance {
     private static HalcyonDBInstance instance = new HalcyonDBInstance();
-    
+
+    public static final String BASE_DIRECTORY = "";
+
     private SchemaCatalog catalog;
     private TupleSequence globaTupleSequence;
 
