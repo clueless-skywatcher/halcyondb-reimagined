@@ -134,8 +134,9 @@ public class Page {
                 fields[i] = new StringField(new String(stringBytes, "UTF-8"));
             }
         }
+        boolean tombstone = dais.readBoolean();
 
-        return Tuple.construct(fields, metadata, key);
+        return Tuple.construct(fields, metadata, key, tombstone);
     }
 
     public int getPageRowCount() {

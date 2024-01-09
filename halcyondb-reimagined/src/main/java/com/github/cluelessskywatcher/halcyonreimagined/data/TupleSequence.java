@@ -1,15 +1,15 @@
 package com.github.cluelessskywatcher.halcyonreimagined.data;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 public class TupleSequence {
-    private AtomicLong keyCounter;
+    private long keyCounter;
     
     public TupleSequence(long initialValue) {
-        this.keyCounter = new AtomicLong(initialValue);
+        this.keyCounter = initialValue;
     }
 
     public long getNextInSequence() {
-        return this.keyCounter.getAndIncrement();
+        long result = Long.valueOf(this.keyCounter);
+        this.keyCounter++;
+        return result;
     }
 }

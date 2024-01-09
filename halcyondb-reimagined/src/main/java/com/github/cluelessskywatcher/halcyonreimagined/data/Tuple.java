@@ -14,16 +14,19 @@ public class Tuple {
     private DataField[] fields;
     private @Getter TupleMetadata metadata;
     private @Getter long tupleKey;
+    private @Getter @Setter boolean isTombStone;
 
     public Tuple(TupleMetadata metadata) {
         this.fields = new DataField[metadata.getFieldCount()];
         this.metadata = metadata;
         this.tupleKey = HalcyonDBInstance.getNextId();
+        this.isTombStone = false;
     }
 
     public Tuple(TupleMetadata metadata, long key) {
         this(metadata);
         this.tupleKey = key;
+        this.isTombStone = false;
     }
 
     // Given a list of DataFields and the metadata:
@@ -41,6 +44,15 @@ public class Tuple {
         for (int i = 0; i < fields.length; i++) {
             tuple.setFieldAt(i, fields[i]);
         }
+        return tuple;
+    }
+
+    public static Tuple construct(DataField[] fields, TupleMetadata metadata, long key, boolean tombstone) {
+        Tuple tuple = new Tuple(metadata, key);
+        for (int i = 0; i < fields.length; i++) {
+            tuple.setFieldAt(i, fields[i]);
+        }
+        tuple.setTombStone(tombstone);
         return tuple;
     }
 
@@ -63,6 +75,10 @@ public class Tuple {
             if (getFieldCount() != otherTuple.getFieldCount()) {
                 return false;
             }
+            if (isTombStone() != otherTuple.isTombStone()) {
+                return false;
+            }
+
             if (getTupleKey() != otherTuple.getTupleKey()) {
                 return false;
             }
@@ -82,16 +98,16 @@ public class Tuple {
         for (int i = 0; i < fields.length; i++) {
             fields[i].serialize(dos);
         }
+        dos.writeBoolean(isTombStone);
     }
 
     public String toString() {
         StringJoiner joiner = new StringJoiner(", ");
-        joiner.add(Long.toString(tupleKey));
         for (int i = 0; i < fields.length; i++) {
             joiner.add(fields[i].toString());
         }
 
-        return String.format("(%s)", joiner.toString());
+        return String.format("%s => (%s)", tupleKey, joiner.toString());
     }
 
     public int hashCode() {

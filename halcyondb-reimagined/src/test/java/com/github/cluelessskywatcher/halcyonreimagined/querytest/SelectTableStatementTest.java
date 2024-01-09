@@ -44,14 +44,13 @@ public class SelectTableStatementTest {
         GeneralUtils.invokeInsert("insert into table1 values (1, 2);", buffer);
         GeneralUtils.invokeInsert("insert into table1 values (2, 3);", buffer);
         GeneralUtils.invokeInsert("insert into table1 values (3, 11);", buffer);
-
         GeneralUtils.invokeInsert("insert into table2 values (\"This\", \"is\", \"Sentence1\");", buffer);
         GeneralUtils.invokeInsert("insert into table2 values (\"This\", \"is\", \"Sentence2\");", buffer);
         GeneralUtils.invokeInsert("insert into table2 values (\"This\", \"is\", \"Sentence3\");", buffer);
     }
 
     @AfterAll
-    public void shutDown() {
+    public void shutDown() throws Exception {
         HalcyonDBInstance.factoryReset();
     }
 
