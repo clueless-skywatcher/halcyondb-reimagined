@@ -2,10 +2,11 @@ package com.github.cluelessskywatcher.halcyonreimagined.data;
 
 import java.io.File;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.github.cluelessskywatcher.halcyonreimagined.HalcyonDBInstance;
+import com.github.cluelessskywatcher.halcyonreimagined.data.lsmtree.LSMTreeStoreManager;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,30 +16,33 @@ public class DataTable {
     private @Getter TupleMetadata metadata;
     private @Getter File file;
     private @Getter @Setter int rowCount;
-    private @Getter long lastRowSequenceId;
+
+    private @Getter LSMTreeStoreManager lsmTreeManager;
     
     public DataTable(String tableName) throws Exception {
         this.pages = new Page[DataConstants.MAX_PAGES_IN_TABLE];
         this.tableName = tableName;
         this.metadata = HalcyonDBInstance.getCatalog().getTableMetadata(tableName);
-        this.file = new File(String.format("/tmp/halcyon/data/%s.dat", tableName));
+        this.file = new File(String.format(FileDirectoryConstants.DATA_DIR + "/%s.dat", tableName));
         if (!this.file.exists()) {
             this.file.getParentFile().mkdirs();
             this.file.createNewFile();
         }
         reevaluateRowCount();
+        this.lsmTreeManager = new LSMTreeStoreManager(this);
     }
 
     public DataTable(String tableName, TupleMetadata metadata) throws Exception {
         this.pages = new Page[DataConstants.MAX_PAGES_IN_TABLE];
         this.tableName = tableName;
         this.metadata = metadata;
-        this.file = new File(String.format("/tmp/halcyon/data/%s.dat", tableName));
+        this.file = new File(String.format(FileDirectoryConstants.DATA_DIR + "/%s.dat", tableName));
         if (!this.file.exists()) {
             this.file.getParentFile().mkdirs();
             this.file.createNewFile();
         }
         reevaluateRowCount();
+        this.lsmTreeManager = new LSMTreeStoreManager(this);
     }
 
     public void reevaluateRowCount() throws Exception {
@@ -53,6 +57,7 @@ public class DataTable {
     }
 
     public void insert(Tuple tuple) throws Exception {
+        this.lsmTreeManager.insert(tuple);
         DataCursor cursor = endCursor();
         int pageNum = cursor.getRowNum() / getMaxRowsPerPage();
         
@@ -76,14 +81,16 @@ public class DataTable {
     }
 
     public List<Tuple> selectAll() throws Exception {
-        DataCursor cursor = startCursor();
-        
-        List<Tuple> results = new ArrayList<>();
+        List<Tuple> results = lsmTreeManager.selectAll();
 
-        while (!cursor.isEndOfTable()) {
-            results.add(getRowFromCursor(cursor));
-            cursor = nextCursor(cursor);
-        }
+        // DataCursor cursor = startCursor();
+        
+        // List<Tuple> results = new ArrayList<>();
+
+        // while (!cursor.isEndOfTable()) {
+        //     results.add(getRowFromCursor(cursor));
+        //     cursor = nextCursor(cursor);
+        // }
 
         return results;
     }

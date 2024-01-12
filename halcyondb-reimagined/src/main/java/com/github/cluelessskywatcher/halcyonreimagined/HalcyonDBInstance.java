@@ -1,18 +1,25 @@
 package com.github.cluelessskywatcher.halcyonreimagined;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Comparator;
+import java.util.stream.Stream;
 
+import com.github.cluelessskywatcher.halcyonreimagined.data.FileDirectoryConstants;
 import com.github.cluelessskywatcher.halcyonreimagined.data.TupleSequence;
 
 public class HalcyonDBInstance {
     private static HalcyonDBInstance instance = new HalcyonDBInstance();
-    
+
+    public static final String BASE_DIRECTORY = ".halcs";
+
     private SchemaCatalog catalog;
-    private TupleSequence globaTupleSequence;
+    private TupleSequence globalTupleSequence;
 
     private HalcyonDBInstance() {
         catalog = new SchemaCatalog();
-        globaTupleSequence = new TupleSequence(0);
+        globalTupleSequence = new TupleSequence(0);
     }
 
     public static SchemaCatalog getCatalog() {
@@ -20,10 +27,10 @@ public class HalcyonDBInstance {
     }
 
     public static long getNextId() {
-        return instance.globaTupleSequence.getNextInSequence();
+        return instance.globalTupleSequence.getNextInSequence();
     }
 
-    public static void factoryReset() {
+    public static void factoryReset() throws Exception {
         /*
          * Reset the database instance and delete all database files
          */
@@ -38,12 +45,14 @@ public class HalcyonDBInstance {
         instance = new HalcyonDBInstance();
     }
 
-    private static void clearAllFiles() {
-        File dir = new File("/tmp/halcyon/data");
+    private static void clearAllFiles() throws Exception {
+        File dir = new File(FileDirectoryConstants.BASE_DIR);
         if (dir.exists()) {
-            for (File file: dir.listFiles()) {
-                file.delete();
+            try (Stream<Path> pathStream = Files.walk(dir.toPath())) {
+                pathStream.sorted(Comparator.reverseOrder())
+                .map(Path::toFile)
+                .forEach(File::delete);
             }
-        }            
+        }       
     }
 }
