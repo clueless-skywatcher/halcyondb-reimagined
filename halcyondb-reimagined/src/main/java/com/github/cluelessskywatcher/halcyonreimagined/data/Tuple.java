@@ -113,4 +113,8 @@ public class Tuple {
     public int hashCode() {
         return toString().hashCode();
     }
+
+    public boolean isValidField(String name) {
+        return metadata.isValidField(name);
+    }
 }

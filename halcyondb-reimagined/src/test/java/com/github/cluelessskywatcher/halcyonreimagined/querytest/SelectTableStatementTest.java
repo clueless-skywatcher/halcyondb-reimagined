@@ -140,4 +140,49 @@ public class SelectTableStatementTest {
         Assertions.assertEquals(result.getRows().length, 3);
         Assertions.assertTrue(GeneralUtils.matchTuples(result.getRows(), table2ExpectedResult));
     }
+
+    @Test
+    public void testQueryDataById() throws Exception {
+        TupleMetadata metadata = new TupleMetadata(
+            new DataType[] {DataType.STRING, DataType.STRING, DataType.STRING},
+            new String[] {"field1", "field2", "field3"}
+        );
+
+        Tuple[] table1Result = new Tuple[] {
+            Tuple.construct(
+                new DataField[] {
+                    new IntegerField(1),
+                    new IntegerField(2)
+                }, 
+                metadata,
+                0
+            ),
+            Tuple.construct(
+                new DataField[] {
+                    new IntegerField(2),
+                    new IntegerField(3)
+                }, 
+                metadata,
+                1
+            ),
+            Tuple.construct(
+                new DataField[] {
+                    new IntegerField(3),
+                    new IntegerField(11)
+                }, 
+                metadata,
+                2
+            )
+        };
+        SelectTableResult result;
+
+        result = GeneralUtils.invokeSelect("select * from table1 where id = 0;", buffer);
+        Assertions.assertEquals(new Tuple[] {table1Result[0]}, result.getRows());
+        
+        result = GeneralUtils.invokeSelect("select * from table1 where id = 1;", buffer);
+        Assertions.assertEquals(new Tuple[] {table1Result[1]}, result.getRows());
+
+        result = GeneralUtils.invokeSelect("select * from table1 where id = 2;", buffer);
+        Assertions.assertEquals(new Tuple[] {table1Result[2]}, result.getRows());
+    }
 }

@@ -10,6 +10,7 @@ import com.github.cluelessskywatcher.halcyonreimagined.data.DataStoreManager;
 import com.github.cluelessskywatcher.halcyonreimagined.data.DataTable;
 import com.github.cluelessskywatcher.halcyonreimagined.data.Tuple;
 import com.github.cluelessskywatcher.halcyonreimagined.data.TupleMetadata;
+import com.github.cluelessskywatcher.halcyonreimagined.filtering.FilterMap;
 
 import lombok.Getter;
 
@@ -57,5 +58,10 @@ public class LSMTreeStoreManager implements DataStoreManager {
         List<Tuple> results = new ArrayList<>(map.values());
         
         return results;
+    }
+
+    public List<Tuple> selectByFilter(FilterMap filters) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'selectByFilter'");
     }
 }

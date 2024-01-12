@@ -3,6 +3,7 @@ package com.github.cluelessskywatcher.halcyonreimagined.halql.dql;
 import com.github.cluelessskywatcher.halcyonreimagined.HalcyonDBInstance;
 import com.github.cluelessskywatcher.halcyonreimagined.data.DataTable;
 import com.github.cluelessskywatcher.halcyonreimagined.data.Tuple;
+import com.github.cluelessskywatcher.halcyonreimagined.filtering.FilterMap;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.TableRelatedStatement;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.models.dql.SelectTableResult;
 
@@ -13,6 +14,7 @@ import lombok.Setter;
 @Setter
 public class SelectTableStatement extends TableRelatedStatement {
     private String tableName;
+    private FilterMap filters;
 
     public SelectTableStatement(String tableName) {
         this.tableName = tableName;
@@ -32,12 +34,25 @@ public class SelectTableStatement extends TableRelatedStatement {
         }
     }
 
+    public SelectTableStatement(String tableName, FilterMap filters) {
+        this(tableName);
+        this.filters = filters;
+    }
+
     @Override
     public void execute() throws Exception {
         DataTable table = getTable();
         long timeTaken = System.currentTimeMillis();
-        Tuple[] rows = table.selectAll().toArray(new Tuple[0]);
+            
+        Tuple[] rows;
+        if (filters == null) {
+            rows = table.selectAll().toArray(new Tuple[0]);
+        }
+        else {
+            rows = table.selectByFilter(this.filters).toArray(new Tuple[0]);
+        }
         timeTaken = System.currentTimeMillis() - timeTaken;
+
         this.result = new SelectTableResult(tableName, rows, timeTaken);
     }
 }

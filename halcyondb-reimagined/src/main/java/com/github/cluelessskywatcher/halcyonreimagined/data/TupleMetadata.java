@@ -1,6 +1,7 @@
 package com.github.cluelessskywatcher.halcyonreimagined.data;
 
 import java.security.InvalidParameterException;
+import java.util.Arrays;
 import java.util.StringJoiner;
 
 public class TupleMetadata {
@@ -69,5 +70,17 @@ public class TupleMetadata {
         }
 
         return String.format("(%s)", joiner.toString());
+    }
+
+    public boolean isValidField(String name) {
+        /*
+         * Returns true if the name is equal to "id"
+         * or any of the field names of the metadata
+         */
+        return name.equals("id") || Arrays.asList(fieldNames).contains(name);
+    }
+
+    public String[] getFieldNames() {
+        return fieldNames;
     }
 }
