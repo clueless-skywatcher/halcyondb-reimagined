@@ -10,6 +10,7 @@ import com.github.cluelessskywatcher.halcyonreimagined.data.DataStoreManager;
 import com.github.cluelessskywatcher.halcyonreimagined.data.DataTable;
 import com.github.cluelessskywatcher.halcyonreimagined.data.Tuple;
 import com.github.cluelessskywatcher.halcyonreimagined.data.TupleMetadata;
+import com.github.cluelessskywatcher.halcyonreimagined.filtering.FilterMap;
 
 import lombok.Getter;
 
@@ -42,20 +43,45 @@ public class LSMTreeStoreManager implements DataStoreManager {
     public List<Tuple> selectAll() throws Exception {
         Map<Long, Tuple> map = new TreeMap<>();
         
-        // First load all SSTable data from all SSTables
+        // First load SSTable data from all SSTables
         Tuple[] resultsFromSSTables = ssTableManager.selectAll();
         
         for (Tuple tuple : resultsFromSSTables) {
-            map.put(tuple.getTupleKey(), tuple);
+            if (!tuple.isTombStone()) {
+                map.put(tuple.getTupleKey(), tuple);
+            }
         }
 
-        // Then load all data from the memtable
+        // Then load all data from the memtable since it contains the most recent data
         for (Map.Entry<Long, Tuple> entry: memTable.getMemMap().entrySet()) {
-            map.put(entry.getKey(), entry.getValue());
+            if (!entry.getValue().isTombStone()) {
+                map.put(entry.getKey(), entry.getValue());
+            }
         }
 
         List<Tuple> results = new ArrayList<>(map.values());
         
         return results;
+    }
+
+    public List<Tuple> selectByFilter(FilterMap filters) throws Exception {
+        Map<Long, Tuple> result = new TreeMap<>();
+
+        // First filter everything from ssTables
+        List<Tuple> ssTableResults = ssTableManager.selectByFilter(filters);
+        for (Tuple tuple : ssTableResults) {
+            result.put(tuple.getTupleKey(), tuple);
+        }
+
+        // Now we filter from the memTable. MemTables have all the recent
+        // updates and entries, so it should replace the old tuples found
+        // from sstables
+
+        List<Tuple> memMapResults = memTable.selectByFilter(filters);
+        for (Tuple tuple : memMapResults) {
+            result.put(tuple.getTupleKey(), tuple);
+        }
+        
+        return new ArrayList<>(result.values());
     }
 }

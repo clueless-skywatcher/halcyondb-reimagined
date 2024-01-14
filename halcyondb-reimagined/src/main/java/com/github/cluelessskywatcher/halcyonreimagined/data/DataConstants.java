@@ -6,4 +6,6 @@ public class DataConstants {
     public static final int PAGE_SIZE = 4096;
 
     public static final int MAX_MEM_TABLE_SIZE = 2;
+
+    public static final String CHARACTER_LIST = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 }

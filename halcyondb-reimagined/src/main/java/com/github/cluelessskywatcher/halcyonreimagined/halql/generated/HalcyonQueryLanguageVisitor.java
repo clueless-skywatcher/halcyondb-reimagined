@@ -1,6 +1,11 @@
 // Generated from com/github/cluelessskywatcher/halcyonreimagined/halql/generated/HalcyonQueryLanguage.g4 by ANTLR 4.7.1
 package com.github.cluelessskywatcher.halcyonreimagined.halql.generated;
 
+import java.util.*;
+
+import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
+import com.github.cluelessskywatcher.halcyonreimagined.filtering.FilterMap;
+
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -59,6 +64,12 @@ public interface HalcyonQueryLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitSelectTableStatement(HalcyonQueryLanguageParser.SelectTableStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HalcyonQueryLanguageParser#queryFilters}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitQueryFilters(HalcyonQueryLanguageParser.QueryFiltersContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HalcyonQueryLanguageParser#tableIdentifier}.
 	 * @param ctx the parse tree

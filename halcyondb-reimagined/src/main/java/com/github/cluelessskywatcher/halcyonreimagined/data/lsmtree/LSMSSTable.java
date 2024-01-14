@@ -6,6 +6,7 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.RandomAccessFile;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,11 +19,11 @@ import com.github.cluelessskywatcher.halcyonreimagined.data.TupleMetadata;
 import com.github.cluelessskywatcher.halcyonreimagined.data.fields.DataField;
 import com.github.cluelessskywatcher.halcyonreimagined.data.fields.IntegerField;
 import com.github.cluelessskywatcher.halcyonreimagined.data.fields.StringField;
-import com.ibm.icu.text.MessageFormat;
+import com.github.cluelessskywatcher.halcyonreimagined.filtering.FilterMap;
 
 import lombok.Getter;
 
-public class LSMSSTable {
+public class LSMSSTable implements Comparable<LSMSSTable> {
     private @Getter File dataFile;
     private @Getter File indexFile;
     private @Getter Long timestamp;
@@ -87,7 +88,7 @@ public class LSMSSTable {
         dataRaf.close();
         indexRaf.close();
     }
-
+    
     public List<Tuple> selectAll() throws Exception {
         List<Tuple> results = new ArrayList<>();
 
@@ -123,5 +124,49 @@ public class LSMSSTable {
         dis.close();
 
         return results;
+    }
+
+    public List<Tuple> selectByFilter(FilterMap filters) throws Exception {
+        List<Tuple> results = new ArrayList<>();
+
+        DataInputStream dis = new DataInputStream(new FileInputStream(dataFile));
+
+        while (dis.available() > 0) {
+            DataField[] fields = new DataField[metadata.getFieldCount()];
+            long key = dis.readLong();
+            for (int i = 0; i < fields.length; i++) {
+                if (metadata.getTypeAt(i) == DataType.INTEGER) {
+                    int value = dis.readInt();
+                    fields[i] = new IntegerField(value);
+                }
+                else if (metadata.getTypeAt(i) == DataType.STRING) {
+                    int length = dis.readInt();
+                    byte[] stringBytes = new byte[length];
+                    dis.readFully(stringBytes);
+                    int current = DataConstants.MAX_STRING_LENGTH - length;
+                    while (current-- > 0) {
+                        dis.readByte();
+                    }
+                    fields[i] = new StringField(new String(stringBytes, "UTF-8"));
+                }
+            }
+            boolean tombstone = dis.readBoolean();
+            if (tombstone) {
+                continue;
+            }
+
+            Tuple tuple = Tuple.construct(fields, metadata, key, tombstone);
+            if (filters.satisfiesFilters(tuple)) {
+                results.add(tuple);
+            }
+        }
+        dis.close();
+
+        return results;
+    }
+
+    @Override
+    public int compareTo(LSMSSTable arg0) {
+        return this.timestamp.compareTo(arg0.getTimestamp());
     }
 }

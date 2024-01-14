@@ -5,8 +5,10 @@ options {
 }
 
 @header {
-import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
 import java.util.*;
+
+import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
+import com.github.cluelessskywatcher.halcyonreimagined.filtering.FilterMap;
 }
 
 @members {
@@ -50,7 +52,18 @@ createTableStatement
     ;
 
 selectTableStatement
-    :   KWORD_SELECT ASTERISK KWORD_FROM tableIdentifier
+    :   KWORD_SELECT ASTERISK KWORD_FROM tableIdentifier (
+            KWORD_WHERE queryFilters
+        )?
+    ;
+
+queryFilters returns [Map<String, Object> filters]
+    @init {
+        $filters = new HashMap<>();
+    }
+    :   (a=fieldIdentifier '=' b=constValue) {
+            $filters.put($a.fieldId, $b.value);
+        }
     ;
 
 tableIdentifier
@@ -104,6 +117,7 @@ KWORD_CREATE  :   C R E A T E ;
 KWORD_SELECT  :   S E L E C T ;
 
 KWORD_FROM  :   F R O M ;
+KWORD_WHERE :   W H E R E;
 KWORD_INTO  :   I N T O ;
 KWORD_VALUES:   V A L U E S ;
 KWORD_TABLE :   T A B L E ;

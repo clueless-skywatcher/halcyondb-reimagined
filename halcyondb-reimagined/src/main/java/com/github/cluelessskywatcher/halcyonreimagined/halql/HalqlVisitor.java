@@ -3,6 +3,7 @@ package com.github.cluelessskywatcher.halcyonreimagined.halql;
 import java.util.Map;
 
 import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
+import com.github.cluelessskywatcher.halcyonreimagined.filtering.FilterMap;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.ddl.CreateTableStatement;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.dml.InsertRowStatement;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.dql.SelectTableStatement;
@@ -13,8 +14,13 @@ public class HalqlVisitor extends HalcyonQueryLanguageBaseVisitor<HalqlStatement
     @Override
     public HalqlStatement visitSelectTableStatement(HalcyonQueryLanguageParser.SelectTableStatementContext ctx) {
         String tableName = ctx.tableIdentifier().getText();
-        SelectTableStatement stmt = new SelectTableStatement(tableName);
-        return stmt;
+        Map<String, Object> filters = ctx.queryFilters() == null ? null : ctx.queryFilters().filters;
+        if (filters != null) { 
+            if (filters.size() > 0){
+                return new SelectTableStatement(tableName, filters);
+            }
+        }
+        return new SelectTableStatement(tableName);
     }
 
     @Override

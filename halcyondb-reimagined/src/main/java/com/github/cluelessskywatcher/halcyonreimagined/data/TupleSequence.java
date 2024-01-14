@@ -12,4 +12,8 @@ public class TupleSequence {
         this.keyCounter++;
         return result;
     }
+
+    public long getCurrent() {
+        return Long.valueOf(this.keyCounter);
+    }
 }

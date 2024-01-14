@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.github.cluelessskywatcher.halcyonreimagined.HalcyonDBInstance;
 import com.github.cluelessskywatcher.halcyonreimagined.data.lsmtree.LSMTreeStoreManager;
+import com.github.cluelessskywatcher.halcyonreimagined.filtering.FilterMap;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -142,5 +143,10 @@ public class DataTable {
     public DataCursor endCursor() {
         DataCursor cursor = new DataCursor(this, rowCount, true);
         return cursor;
+    }
+
+    public List<Tuple> selectByFilter(FilterMap filters) throws Exception {
+        List<Tuple> results = this.lsmTreeManager.selectByFilter(filters);
+        return results;
     }
 }

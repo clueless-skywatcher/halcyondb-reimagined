@@ -1,7 +1,10 @@
 package com.github.cluelessskywatcher.halcyonreimagined.data;
 
 import java.security.InvalidParameterException;
+import java.util.Arrays;
 import java.util.StringJoiner;
+
+import com.github.cluelessskywatcher.halcyonreimagined.exceptions.InvalidFieldNameException;
 
 public class TupleMetadata {
     private DataType[] types;
@@ -39,6 +42,21 @@ public class TupleMetadata {
         return totalSize;
     }
 
+    public DataType getTypeOf(String fieldName) throws InvalidFieldNameException {
+        // Return ID type
+        if (fieldName.equals("id")) {
+            return DataType.LONG;
+        }
+        
+        for (int i = 0; i < fieldNames.length; i++) {
+            if (fieldNames[i].equals(fieldName)) {
+                return types[i];
+            }
+        }
+
+        throw new InvalidFieldNameException(String.format("Field name %s does not exist", fieldName));
+    }
+
     public int getFieldCount() {
         return types.length;
     }
@@ -69,5 +87,17 @@ public class TupleMetadata {
         }
 
         return String.format("(%s)", joiner.toString());
+    }
+
+    public boolean isValidField(String name) {
+        /*
+         * Returns true if the name is equal to "id"
+         * or any of the field names of the metadata
+         */
+        return name.equals("id") || Arrays.asList(fieldNames).contains(name);
+    }
+
+    public String[] getFieldNames() {
+        return fieldNames;
     }
 }
