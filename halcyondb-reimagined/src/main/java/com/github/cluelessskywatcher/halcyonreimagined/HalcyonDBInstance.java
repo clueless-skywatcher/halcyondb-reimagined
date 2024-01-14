@@ -30,6 +30,10 @@ public class HalcyonDBInstance {
         return instance.globalTupleSequence.getNextInSequence();
     }
 
+    public static long getCurrentId() {
+        return instance.globalTupleSequence.getCurrent();
+    }
+
     public static void factoryReset() throws Exception {
         /*
          * Reset the database instance and delete all database files

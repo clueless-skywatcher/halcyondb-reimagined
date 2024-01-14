@@ -6,6 +6,8 @@ import java.util.StringJoiner;
 
 import com.github.cluelessskywatcher.halcyonreimagined.HalcyonDBInstance;
 import com.github.cluelessskywatcher.halcyonreimagined.data.fields.DataField;
+import com.github.cluelessskywatcher.halcyonreimagined.data.fields.LongField;
+import com.github.cluelessskywatcher.halcyonreimagined.exceptions.InvalidFieldNameException;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +26,8 @@ public class Tuple {
     }
 
     public Tuple(TupleMetadata metadata, long key) {
-        this(metadata);
+        this.fields = new DataField[metadata.getFieldCount()];
+        this.metadata = metadata;
         this.tupleKey = key;
         this.isTombStone = false;
     }
@@ -116,5 +119,37 @@ public class Tuple {
 
     public boolean isValidField(String name) {
         return metadata.isValidField(name);
+    }
+
+    public DataField getFieldFromName(String fieldName) throws Exception {
+        if (fieldName.equals("id")) {
+            return new LongField(this.tupleKey);
+        }
+
+        for (int i = 0; i < metadata.getFieldCount(); i++) {
+            if (fieldName.equals(metadata.getFieldAt(i))) {
+                return fields[i];
+            }
+        }
+
+        throw new InvalidFieldNameException(String.format("Cannot find field %s", fieldName));
+    }
+
+    public String represent() {
+        /*
+         * Different from toString. Used only in utility functions
+         * for constructing insert queries
+         */
+        StringJoiner joiner = new StringJoiner(", ");
+        for (int i = 0; i < fields.length; i++) {
+            if (fields[i].getType() == DataType.STRING) {
+                joiner.add(String.format("\"%s\"", fields[i].toString()));
+            }
+            else {
+                joiner.add(fields[i].toString());
+            }
+        }
+
+        return String.format("(%s)", joiner.toString());
     }
 }

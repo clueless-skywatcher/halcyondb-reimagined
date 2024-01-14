@@ -1,10 +1,10 @@
 // Generated from com/github/cluelessskywatcher/halcyonreimagined/halql/generated/HalcyonQueryLanguage.g4 by ANTLR 4.7.1
 package com.github.cluelessskywatcher.halcyonreimagined.halql.generated;
 
-    import java.util.*;
-    
-    import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
-    import com.github.cluelessskywatcher.halcyonreimagined.filtering.FilterMap;
+import java.util.*;
+
+import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
+import com.github.cluelessskywatcher.halcyonreimagined.filtering.FilterMap;
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;

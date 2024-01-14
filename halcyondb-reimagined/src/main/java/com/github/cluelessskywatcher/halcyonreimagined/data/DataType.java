@@ -32,7 +32,22 @@ public enum DataType {
         public String toString() {
             return "str";
         }
-    };
+    },
+    LONG {
+        @Override
+        public int getSize() {
+            return 8;
+        }
+
+        @Override
+        public DataField parse() {
+            throw new UnsupportedOperationException("Unimplemented method 'parse'");
+        }
+
+        public String toString() {
+            return "long";
+        }
+    },;
 
     public abstract int getSize();
 

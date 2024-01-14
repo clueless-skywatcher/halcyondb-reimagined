@@ -5,10 +5,10 @@ options {
 }
 
 @header {
-    import java.util.*;
-    
-    import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
-    import com.github.cluelessskywatcher.halcyonreimagined.filtering.FilteringSet;
+import java.util.*;
+
+import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
+import com.github.cluelessskywatcher.halcyonreimagined.filtering.FilterMap;
 }
 
 @members {
@@ -57,8 +57,13 @@ selectTableStatement
         )?
     ;
 
-queryFilters returns [FilteringSet filters]
-    :   (fieldIdentifier '=' constValue)
+queryFilters returns [Map<String, Object> filters]
+    @init {
+        $filters = new HashMap<>();
+    }
+    :   (a=fieldIdentifier '=' b=constValue) {
+            $filters.put($a.fieldId, $b.value);
+        }
     ;
 
 tableIdentifier

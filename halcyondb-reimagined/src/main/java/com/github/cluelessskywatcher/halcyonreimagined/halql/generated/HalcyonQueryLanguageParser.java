@@ -1,10 +1,10 @@
 // Generated from com/github/cluelessskywatcher/halcyonreimagined/halql/generated/HalcyonQueryLanguage.g4 by ANTLR 4.7.1
 package com.github.cluelessskywatcher.halcyonreimagined.halql.generated;
 
-    import java.util.*;
-    
-    import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
-    import com.github.cluelessskywatcher.halcyonreimagined.filtering.FilterMap;
+import java.util.*;
+
+import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
+import com.github.cluelessskywatcher.halcyonreimagined.filtering.FilterMap;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -557,7 +557,9 @@ public class HalcyonQueryLanguageParser extends Parser {
 	}
 
 	public static class QueryFiltersContext extends ParserRuleContext {
-		public FilterMap filters;
+		public Map<String, Object> filters;
+		public FieldIdentifierContext a;
+		public ConstValueContext b;
 		public FieldIdentifierContext fieldIdentifier() {
 			return getRuleContext(FieldIdentifierContext.class,0);
 		}
@@ -586,17 +588,23 @@ public class HalcyonQueryLanguageParser extends Parser {
 	public final QueryFiltersContext queryFilters() throws RecognitionException {
 		QueryFiltersContext _localctx = new QueryFiltersContext(_ctx, getState());
 		enterRule(_localctx, 16, RULE_queryFilters);
+
+		        ((QueryFiltersContext)_localctx).filters =  new HashMap<>();
+		    
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			{
 			setState(72);
-			fieldIdentifier();
+			((QueryFiltersContext)_localctx).a = fieldIdentifier();
 			setState(73);
 			match(T__3);
 			setState(74);
-			constValue();
+			((QueryFiltersContext)_localctx).b = constValue();
 			}
+
+			            _localctx.filters.put(((QueryFiltersContext)_localctx).a.fieldId, ((QueryFiltersContext)_localctx).b.value);
+			        
 			}
 		}
 		catch (RecognitionException re) {
@@ -639,7 +647,7 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(76);
+			setState(78);
 			identifier();
 			}
 		}
@@ -683,7 +691,7 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(78);
+			setState(80);
 			((FieldIdentifierContext)_localctx).IDENTIFIER = match(IDENTIFIER);
 			 ((FieldIdentifierContext)_localctx).fieldId =  (((FieldIdentifierContext)_localctx).IDENTIFIER!=null?((FieldIdentifierContext)_localctx).IDENTIFIER.getText():null); 
 			}
@@ -727,24 +735,24 @@ public class HalcyonQueryLanguageParser extends Parser {
 		IdentifierContext _localctx = new IdentifierContext(_ctx, getState());
 		enterRule(_localctx, 22, RULE_identifier);
 		try {
-			setState(85);
+			setState(87);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(81);
-				match(IDENTIFIER);
-				setState(82);
-				match(T__4);
 				setState(83);
+				match(IDENTIFIER);
+				setState(84);
+				match(T__4);
+				setState(85);
 				match(IDENTIFIER);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(84);
+				setState(86);
 				match(IDENTIFIER);
 				}
 				break;
@@ -800,23 +808,23 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(87);
+			setState(89);
 			((TableDefinitionContext)_localctx).a = fieldDefinition();
 			 _localctx.tableDef.put(((TableDefinitionContext)_localctx).a.def.fieldId, ((TableDefinitionContext)_localctx).a.def.dataType); 
-			setState(95);
+			setState(97);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__5) {
 				{
 				{
-				setState(89);
+				setState(91);
 				match(T__5);
-				setState(90);
+				setState(92);
 				((TableDefinitionContext)_localctx).b = fieldDefinition();
 				 _localctx.tableDef.put(((TableDefinitionContext)_localctx).b.def.fieldId, ((TableDefinitionContext)_localctx).b.def.dataType); 
 				}
 				}
-				setState(97);
+				setState(99);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -868,9 +876,9 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(98);
+			setState(100);
 			((FieldDefinitionContext)_localctx).a = fieldIdentifier();
-			setState(99);
+			setState(101);
 			((FieldDefinitionContext)_localctx).b = dataType();
 			 ((FieldDefinitionContext)_localctx).def =  new FieldDef(((FieldDefinitionContext)_localctx).a.fieldId, ((FieldDefinitionContext)_localctx).b.dtType); 
 			}
@@ -925,23 +933,23 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(102);
+			setState(104);
 			((ValuesContext)_localctx).a = constValue();
 			 _localctx.valueList.add(((ValuesContext)_localctx).a.value); 
-			setState(110);
+			setState(112);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__5) {
 				{
 				{
-				setState(104);
+				setState(106);
 				match(T__5);
-				setState(105);
+				setState(107);
 				((ValuesContext)_localctx).b = constValue();
 				 _localctx.valueList.add(((ValuesContext)_localctx).b.value); 
 				}
 				}
-				setState(112);
+				setState(114);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -987,13 +995,13 @@ public class HalcyonQueryLanguageParser extends Parser {
 		ConstValueContext _localctx = new ConstValueContext(_ctx, getState());
 		enterRule(_localctx, 30, RULE_constValue);
 		try {
-			setState(117);
+			setState(119);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case NUMBER:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(113);
+				setState(115);
 				((ConstValueContext)_localctx).NUMBER = match(NUMBER);
 				 ((ConstValueContext)_localctx).value =  (((ConstValueContext)_localctx).NUMBER!=null?((ConstValueContext)_localctx).NUMBER.getText():null); 
 				}
@@ -1001,7 +1009,7 @@ public class HalcyonQueryLanguageParser extends Parser {
 			case QUOTED:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(115);
+				setState(117);
 				((ConstValueContext)_localctx).QUOTED = match(QUOTED);
 				 ((ConstValueContext)_localctx).value =  (((ConstValueContext)_localctx).QUOTED!=null?((ConstValueContext)_localctx).QUOTED.getText():null); 
 				}
@@ -1048,13 +1056,13 @@ public class HalcyonQueryLanguageParser extends Parser {
 		DataTypeContext _localctx = new DataTypeContext(_ctx, getState());
 		enterRule(_localctx, 32, RULE_dataType);
 		try {
-			setState(123);
+			setState(125);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case TYPE_INT:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(119);
+				setState(121);
 				match(TYPE_INT);
 				((DataTypeContext)_localctx).dtType =  DataType.INTEGER; 
 				}
@@ -1062,7 +1070,7 @@ public class HalcyonQueryLanguageParser extends Parser {
 			case TYPE_STRING:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(121);
+				setState(123);
 				match(TYPE_STRING);
 				((DataTypeContext)_localctx).dtType =  DataType.STRING; 
 				}
@@ -1083,35 +1091,36 @@ public class HalcyonQueryLanguageParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\33\u0080\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\33\u0082\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\3\2\3\2\3\2\3\3\3\3\3\3\5\3+\n\3\3\4\3\4\3\5\3\5\3\6\3\6\3\7\3\7\3\7"+
 		"\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3"+
-		"\t\3\t\5\tI\n\t\3\n\3\n\3\n\3\n\3\13\3\13\3\f\3\f\3\f\3\r\3\r\3\r\3\r"+
-		"\5\rX\n\r\3\16\3\16\3\16\3\16\3\16\3\16\7\16`\n\16\f\16\16\16c\13\16\3"+
-		"\17\3\17\3\17\3\17\3\20\3\20\3\20\3\20\3\20\3\20\7\20o\n\20\f\20\16\20"+
-		"r\13\20\3\21\3\21\3\21\3\21\5\21x\n\21\3\22\3\22\3\22\3\22\5\22~\n\22"+
-		"\3\22\2\2\23\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"\2\2\2v\2$\3\2\2"+
-		"\2\4*\3\2\2\2\6,\3\2\2\2\b.\3\2\2\2\n\60\3\2\2\2\f\62\3\2\2\2\16:\3\2"+
-		"\2\2\20B\3\2\2\2\22J\3\2\2\2\24N\3\2\2\2\26P\3\2\2\2\30W\3\2\2\2\32Y\3"+
-		"\2\2\2\34d\3\2\2\2\36h\3\2\2\2 w\3\2\2\2\"}\3\2\2\2$%\5\4\3\2%&\7\3\2"+
-		"\2&\3\3\2\2\2\'+\5\6\4\2(+\5\b\5\2)+\5\n\6\2*\'\3\2\2\2*(\3\2\2\2*)\3"+
-		"\2\2\2+\5\3\2\2\2,-\5\f\7\2-\7\3\2\2\2./\5\16\b\2/\t\3\2\2\2\60\61\5\20"+
-		"\t\2\61\13\3\2\2\2\62\63\7\13\2\2\63\64\7\20\2\2\64\65\5\24\13\2\65\66"+
-		"\7\21\2\2\66\67\7\4\2\2\678\5\36\20\289\7\5\2\29\r\3\2\2\2:;\7\f\2\2;"+
-		"<\7\22\2\2<=\5\24\13\2=>\7\23\2\2>?\7\4\2\2?@\5\32\16\2@A\7\5\2\2A\17"+
-		"\3\2\2\2BC\7\r\2\2CD\7\25\2\2DE\7\16\2\2EH\5\24\13\2FG\7\17\2\2GI\5\22"+
-		"\n\2HF\3\2\2\2HI\3\2\2\2I\21\3\2\2\2JK\5\26\f\2KL\7\6\2\2LM\5 \21\2M\23"+
-		"\3\2\2\2NO\5\30\r\2O\25\3\2\2\2PQ\7\26\2\2QR\b\f\1\2R\27\3\2\2\2ST\7\26"+
-		"\2\2TU\7\7\2\2UX\7\26\2\2VX\7\26\2\2WS\3\2\2\2WV\3\2\2\2X\31\3\2\2\2Y"+
-		"Z\5\34\17\2Za\b\16\1\2[\\\7\b\2\2\\]\5\34\17\2]^\b\16\1\2^`\3\2\2\2_["+
-		"\3\2\2\2`c\3\2\2\2a_\3\2\2\2ab\3\2\2\2b\33\3\2\2\2ca\3\2\2\2de\5\26\f"+
-		"\2ef\5\"\22\2fg\b\17\1\2g\35\3\2\2\2hi\5 \21\2ip\b\20\1\2jk\7\b\2\2kl"+
-		"\5 \21\2lm\b\20\1\2mo\3\2\2\2nj\3\2\2\2or\3\2\2\2pn\3\2\2\2pq\3\2\2\2"+
-		"q\37\3\2\2\2rp\3\2\2\2st\7\30\2\2tx\b\21\1\2uv\7\27\2\2vx\b\21\1\2ws\3"+
-		"\2\2\2wu\3\2\2\2x!\3\2\2\2yz\7\t\2\2z~\b\22\1\2{|\7\n\2\2|~\b\22\1\2}"+
-		"y\3\2\2\2}{\3\2\2\2~#\3\2\2\2\t*HWapw}";
+		"\t\3\t\5\tI\n\t\3\n\3\n\3\n\3\n\3\n\3\n\3\13\3\13\3\f\3\f\3\f\3\r\3\r"+
+		"\3\r\3\r\5\rZ\n\r\3\16\3\16\3\16\3\16\3\16\3\16\7\16b\n\16\f\16\16\16"+
+		"e\13\16\3\17\3\17\3\17\3\17\3\20\3\20\3\20\3\20\3\20\3\20\7\20q\n\20\f"+
+		"\20\16\20t\13\20\3\21\3\21\3\21\3\21\5\21z\n\21\3\22\3\22\3\22\3\22\5"+
+		"\22\u0080\n\22\3\22\2\2\23\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"\2"+
+		"\2\2x\2$\3\2\2\2\4*\3\2\2\2\6,\3\2\2\2\b.\3\2\2\2\n\60\3\2\2\2\f\62\3"+
+		"\2\2\2\16:\3\2\2\2\20B\3\2\2\2\22J\3\2\2\2\24P\3\2\2\2\26R\3\2\2\2\30"+
+		"Y\3\2\2\2\32[\3\2\2\2\34f\3\2\2\2\36j\3\2\2\2 y\3\2\2\2\"\177\3\2\2\2"+
+		"$%\5\4\3\2%&\7\3\2\2&\3\3\2\2\2\'+\5\6\4\2(+\5\b\5\2)+\5\n\6\2*\'\3\2"+
+		"\2\2*(\3\2\2\2*)\3\2\2\2+\5\3\2\2\2,-\5\f\7\2-\7\3\2\2\2./\5\16\b\2/\t"+
+		"\3\2\2\2\60\61\5\20\t\2\61\13\3\2\2\2\62\63\7\13\2\2\63\64\7\20\2\2\64"+
+		"\65\5\24\13\2\65\66\7\21\2\2\66\67\7\4\2\2\678\5\36\20\289\7\5\2\29\r"+
+		"\3\2\2\2:;\7\f\2\2;<\7\22\2\2<=\5\24\13\2=>\7\23\2\2>?\7\4\2\2?@\5\32"+
+		"\16\2@A\7\5\2\2A\17\3\2\2\2BC\7\r\2\2CD\7\25\2\2DE\7\16\2\2EH\5\24\13"+
+		"\2FG\7\17\2\2GI\5\22\n\2HF\3\2\2\2HI\3\2\2\2I\21\3\2\2\2JK\5\26\f\2KL"+
+		"\7\6\2\2LM\5 \21\2MN\3\2\2\2NO\b\n\1\2O\23\3\2\2\2PQ\5\30\r\2Q\25\3\2"+
+		"\2\2RS\7\26\2\2ST\b\f\1\2T\27\3\2\2\2UV\7\26\2\2VW\7\7\2\2WZ\7\26\2\2"+
+		"XZ\7\26\2\2YU\3\2\2\2YX\3\2\2\2Z\31\3\2\2\2[\\\5\34\17\2\\c\b\16\1\2]"+
+		"^\7\b\2\2^_\5\34\17\2_`\b\16\1\2`b\3\2\2\2a]\3\2\2\2be\3\2\2\2ca\3\2\2"+
+		"\2cd\3\2\2\2d\33\3\2\2\2ec\3\2\2\2fg\5\26\f\2gh\5\"\22\2hi\b\17\1\2i\35"+
+		"\3\2\2\2jk\5 \21\2kr\b\20\1\2lm\7\b\2\2mn\5 \21\2no\b\20\1\2oq\3\2\2\2"+
+		"pl\3\2\2\2qt\3\2\2\2rp\3\2\2\2rs\3\2\2\2s\37\3\2\2\2tr\3\2\2\2uv\7\30"+
+		"\2\2vz\b\21\1\2wx\7\27\2\2xz\b\21\1\2yu\3\2\2\2yw\3\2\2\2z!\3\2\2\2{|"+
+		"\7\t\2\2|\u0080\b\22\1\2}~\7\n\2\2~\u0080\b\22\1\2\177{\3\2\2\2\177}\3"+
+		"\2\2\2\u0080#\3\2\2\2\t*HYcry\177";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

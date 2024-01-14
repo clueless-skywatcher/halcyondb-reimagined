@@ -4,6 +4,8 @@ import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.StringJoiner;
 
+import com.github.cluelessskywatcher.halcyonreimagined.exceptions.InvalidFieldNameException;
+
 public class TupleMetadata {
     private DataType[] types;
     private String[] fieldNames;
@@ -38,6 +40,21 @@ public class TupleMetadata {
             totalSize += types[i].getSize();
         }
         return totalSize;
+    }
+
+    public DataType getTypeOf(String fieldName) throws InvalidFieldNameException {
+        // Return ID type
+        if (fieldName.equals("id")) {
+            return DataType.LONG;
+        }
+        
+        for (int i = 0; i < fieldNames.length; i++) {
+            if (fieldNames[i].equals(fieldName)) {
+                return types[i];
+            }
+        }
+
+        throw new InvalidFieldNameException(String.format("Field name %s does not exist", fieldName));
     }
 
     public int getFieldCount() {

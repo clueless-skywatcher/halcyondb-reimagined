@@ -145,7 +145,7 @@ public class DataTable {
         return cursor;
     }
 
-    public List<Tuple> selectByFilter(FilterMap filters) {
+    public List<Tuple> selectByFilter(FilterMap filters) throws Exception {
         List<Tuple> results = this.lsmTreeManager.selectByFilter(filters);
         return results;
     }
