@@ -89,6 +89,10 @@ public class TupleMetadata {
         return String.format("(%s)", joiner.toString());
     }
 
+    public int hashCode() {
+        return toString().hashCode();
+    }
+
     public boolean isValidField(String name) {
         /*
          * Returns true if the name is equal to "id"

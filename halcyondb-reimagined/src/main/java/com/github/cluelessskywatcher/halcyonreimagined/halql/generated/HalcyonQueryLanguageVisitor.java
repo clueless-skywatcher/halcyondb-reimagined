@@ -65,6 +65,12 @@ public interface HalcyonQueryLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSelectTableStatement(HalcyonQueryLanguageParser.SelectTableStatementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HalcyonQueryLanguageParser#projection}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitProjection(HalcyonQueryLanguageParser.ProjectionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HalcyonQueryLanguageParser#queryFilters}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

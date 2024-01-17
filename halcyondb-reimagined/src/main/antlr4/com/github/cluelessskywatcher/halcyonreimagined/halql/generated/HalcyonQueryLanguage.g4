@@ -52,9 +52,17 @@ createTableStatement
     ;
 
 selectTableStatement
-    :   KWORD_SELECT ASTERISK KWORD_FROM tableIdentifier (
+    :   KWORD_SELECT projection KWORD_FROM tableIdentifier (
             KWORD_WHERE queryFilters
         )?
+    ;
+
+projection returns [List<String> projectionList]
+    @init {
+        $projectionList = new ArrayList<>();
+    }
+    :   ASTERISK
+    |   (a=identifier { $projectionList.add($a.value); })(',' b=identifier { $projectionList.add($b.value); })*
     ;
 
 queryFilters returns [Map<String, Object> filters]
@@ -74,9 +82,8 @@ fieldIdentifier returns [String fieldId]
     :   IDENTIFIER { $fieldId = $IDENTIFIER.text; }
     ;
 
-identifier
-    :   IDENTIFIER '.' IDENTIFIER
-    |   IDENTIFIER
+identifier returns [String value]
+    :   IDENTIFIER { $value = $IDENTIFIER.text; }
     ;
 
 tableDefinition returns [ Map<String, DataType> tableDef ]

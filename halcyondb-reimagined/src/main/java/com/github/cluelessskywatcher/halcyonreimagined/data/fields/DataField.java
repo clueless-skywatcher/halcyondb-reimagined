@@ -11,4 +11,6 @@ public interface DataField {
     public Object getValue();
 
     public void serialize(DataOutputStream stream) throws IOException;
+
+    public int hashCode();
 }

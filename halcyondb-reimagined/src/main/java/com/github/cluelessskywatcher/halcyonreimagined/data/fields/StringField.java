@@ -2,6 +2,7 @@ package com.github.cluelessskywatcher.halcyonreimagined.data.fields;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 import com.github.cluelessskywatcher.halcyonreimagined.data.DataConstants;
 import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
@@ -48,5 +49,11 @@ public class StringField implements DataField {
 
     public String toString() {
         return value;
+    }
+
+
+    @Override
+    public int hashCode() {
+        return this.value.hashCode();
     }
 }

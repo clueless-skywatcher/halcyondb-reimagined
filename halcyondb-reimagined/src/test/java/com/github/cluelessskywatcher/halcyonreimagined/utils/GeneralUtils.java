@@ -1,7 +1,9 @@
 package com.github.cluelessskywatcher.halcyonreimagined.utils;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
 
 import com.github.cluelessskywatcher.halcyonreimagined.HalcyonDBInstance;
@@ -10,6 +12,7 @@ import com.github.cluelessskywatcher.halcyonreimagined.data.DataConstants;
 import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
 import com.github.cluelessskywatcher.halcyonreimagined.data.Tuple;
 import com.github.cluelessskywatcher.halcyonreimagined.data.TupleMetadata;
+import com.github.cluelessskywatcher.halcyonreimagined.data.TupleProjection;
 import com.github.cluelessskywatcher.halcyonreimagined.data.fields.DataField;
 import com.github.cluelessskywatcher.halcyonreimagined.data.fields.IntegerField;
 import com.github.cluelessskywatcher.halcyonreimagined.data.fields.StringField;
@@ -50,14 +53,34 @@ public class GeneralUtils {
         return statement1.getClass();
     }
 
-    public static boolean matchTuples(Tuple[] l1, Tuple[] l2) {
-        return new HashSet<>(Arrays.asList(l1)).equals(new HashSet<>(Arrays.asList(l2)));
+    public static boolean matchTuples(TupleProjection[] l1, TupleProjection[] l2) {
+        if (l1.length != l2.length) {
+            return false;
+        }
+
+        Map<String, Integer> elementCount = new HashMap<>();
+
+        for (TupleProjection element : l1) {
+            String elementString = element.toString();
+            elementCount.put(elementString, elementCount.getOrDefault(elementString, 0) + 1);
+        }
+
+        for (TupleProjection element : l2) {
+            String elementString = element.toString();
+            if (!elementCount.containsKey(elementString) || elementCount.get(elementString) == 0) {
+                return false;
+            }
+
+            elementCount.put(elementString, elementCount.get(elementString) - 1);
+        }
+
+        return true;
     }
 
-    public static Tuple[] insertRandomRows(String table, int count, InputBuffer buffer) throws Exception {
+    public static TupleProjection[] insertRandomRowsAndSelectStar(String table, int count, InputBuffer buffer) throws Exception {
         TupleMetadata metadata = HalcyonDBInstance.getCatalog().getTableMetadata(table);
 
-        Tuple[] rows = new Tuple[count];
+        TupleProjection[] rows = new TupleProjection[count];
 
         for (int j = 0; j < count; j++) {
             DataField[] fields = new DataField[metadata.getFieldCount()];
@@ -83,7 +106,7 @@ public class GeneralUtils {
                 buffer
             );
 
-            rows[j] = tuple;
+            rows[j] = tuple.project();
         }
 
         return rows;

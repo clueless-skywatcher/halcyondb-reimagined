@@ -94,6 +94,16 @@ public interface HalcyonQueryLanguageListener extends ParseTreeListener {
 	 */
 	void exitSelectTableStatement(HalcyonQueryLanguageParser.SelectTableStatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link HalcyonQueryLanguageParser#projection}.
+	 * @param ctx the parse tree
+	 */
+	void enterProjection(HalcyonQueryLanguageParser.ProjectionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HalcyonQueryLanguageParser#projection}.
+	 * @param ctx the parse tree
+	 */
+	void exitProjection(HalcyonQueryLanguageParser.ProjectionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link HalcyonQueryLanguageParser#queryFilters}.
 	 * @param ctx the parse tree
 	 */

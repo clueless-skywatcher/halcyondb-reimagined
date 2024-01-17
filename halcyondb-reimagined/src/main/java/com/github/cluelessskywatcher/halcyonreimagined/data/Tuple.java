@@ -2,6 +2,7 @@ package com.github.cluelessskywatcher.halcyonreimagined.data;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.StringJoiner;
 
 import com.github.cluelessskywatcher.halcyonreimagined.HalcyonDBInstance;
@@ -151,5 +152,13 @@ public class Tuple {
         }
 
         return String.format("(%s)", joiner.toString());
+    }
+
+    public TupleProjection project(List<String> projection) throws Exception {
+        return new TupleProjection(this, projection);
+    }
+
+    public TupleProjection project() throws Exception {
+        return new TupleProjection(this);
     }
 }

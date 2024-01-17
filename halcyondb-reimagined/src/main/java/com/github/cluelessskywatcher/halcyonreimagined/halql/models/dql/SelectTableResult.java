@@ -1,15 +1,16 @@
 package com.github.cluelessskywatcher.halcyonreimagined.halql.models.dql;
 
 import com.github.cluelessskywatcher.halcyonreimagined.data.Tuple;
+import com.github.cluelessskywatcher.halcyonreimagined.data.TupleProjection;
 import com.github.cluelessskywatcher.halcyonreimagined.halql.models.TableRelatedResult;
 
 import lombok.Getter;
 
 
 public class SelectTableResult extends TableRelatedResult {
-    private @Getter Tuple[] rows;
+    private @Getter TupleProjection[] rows;
 
-    public SelectTableResult(String tableName, Tuple[] rows, long timeTaken) {
+    public SelectTableResult(String tableName, TupleProjection[] rows, long timeTaken) {
         this.rows = rows;
         this.tableName = tableName;
         this.timeTaken = timeTaken;
@@ -26,7 +27,7 @@ public class SelectTableResult extends TableRelatedResult {
         }
         else {
             if (rows != null) {
-                for (Tuple row : rows) {
+                for (TupleProjection row : rows) {
                     System.out.println(row.toString());
                 }
             }

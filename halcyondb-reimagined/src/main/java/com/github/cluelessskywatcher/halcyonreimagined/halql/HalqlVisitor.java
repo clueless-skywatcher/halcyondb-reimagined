@@ -1,5 +1,6 @@
 package com.github.cluelessskywatcher.halcyonreimagined.halql;
 
+import java.util.List;
 import java.util.Map;
 
 import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
@@ -14,13 +15,14 @@ public class HalqlVisitor extends HalcyonQueryLanguageBaseVisitor<HalqlStatement
     @Override
     public HalqlStatement visitSelectTableStatement(HalcyonQueryLanguageParser.SelectTableStatementContext ctx) {
         String tableName = ctx.tableIdentifier().getText();
+        List<String> projection = ctx.projection().projectionList;
         Map<String, Object> filters = ctx.queryFilters() == null ? null : ctx.queryFilters().filters;
         if (filters != null) { 
             if (filters.size() > 0){
-                return new SelectTableStatement(tableName, filters);
+                return new SelectTableStatement(tableName, filters, projection);
             }
         }
-        return new SelectTableStatement(tableName);
+        return new SelectTableStatement(tableName, projection);
     }
 
     @Override

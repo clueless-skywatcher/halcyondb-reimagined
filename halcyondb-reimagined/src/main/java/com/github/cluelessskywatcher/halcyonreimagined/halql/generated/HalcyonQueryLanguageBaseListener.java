@@ -118,6 +118,18 @@ public class HalcyonQueryLanguageBaseListener implements HalcyonQueryLanguageLis
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterProjection(HalcyonQueryLanguageParser.ProjectionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitProjection(HalcyonQueryLanguageParser.ProjectionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterQueryFilters(HalcyonQueryLanguageParser.QueryFiltersContext ctx) { }
 	/**
 	 * {@inheritDoc}

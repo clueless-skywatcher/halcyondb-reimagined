@@ -2,6 +2,7 @@ package com.github.cluelessskywatcher.halcyonreimagined.data.fields;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 import com.github.cluelessskywatcher.halcyonreimagined.data.DataType;
 
@@ -30,5 +31,18 @@ public class LongField implements DataField {
     public String toString() {
         return Long.toString(value);
     }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.value);
+    }
     
+    public boolean equals(Object other) {
+        if (other instanceof LongField) {
+            LongField otherString = (LongField) other;
+            return this.value == otherString.value;
+        }
+        return false;
+    }
 }

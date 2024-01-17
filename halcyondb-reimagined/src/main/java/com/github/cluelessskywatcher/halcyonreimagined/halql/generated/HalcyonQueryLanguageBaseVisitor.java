@@ -79,6 +79,13 @@ public class HalcyonQueryLanguageBaseVisitor<T> extends AbstractParseTreeVisitor
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitProjection(HalcyonQueryLanguageParser.ProjectionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitQueryFilters(HalcyonQueryLanguageParser.QueryFiltersContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

@@ -23,31 +23,30 @@ public class HalcyonQueryLanguageParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, TYPE_INT=7, TYPE_STRING=8, 
-		KWORD_INSERT=9, KWORD_CREATE=10, KWORD_SELECT=11, KWORD_FROM=12, KWORD_WHERE=13, 
-		KWORD_INTO=14, KWORD_VALUES=15, KWORD_TABLE=16, KWORD_WITH=17, Q_MARK=18, 
-		ASTERISK=19, IDENTIFIER=20, QUOTED=21, NUMBER=22, FLOAT=23, INTEGER=24, 
-		WS=25;
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, TYPE_INT=6, TYPE_STRING=7, KWORD_INSERT=8, 
+		KWORD_CREATE=9, KWORD_SELECT=10, KWORD_FROM=11, KWORD_WHERE=12, KWORD_INTO=13, 
+		KWORD_VALUES=14, KWORD_TABLE=15, KWORD_WITH=16, Q_MARK=17, ASTERISK=18, 
+		IDENTIFIER=19, QUOTED=20, NUMBER=21, FLOAT=22, INTEGER=23, WS=24;
 	public static final int
 		RULE_halqlEntryPoint = 0, RULE_halqlStatement = 1, RULE_halqlDmlStatement = 2, 
 		RULE_halqlDdlStatement = 3, RULE_halqlDqlStatement = 4, RULE_insertRowStatement = 5, 
-		RULE_createTableStatement = 6, RULE_selectTableStatement = 7, RULE_queryFilters = 8, 
-		RULE_tableIdentifier = 9, RULE_fieldIdentifier = 10, RULE_identifier = 11, 
-		RULE_tableDefinition = 12, RULE_fieldDefinition = 13, RULE_values = 14, 
-		RULE_constValue = 15, RULE_dataType = 16;
+		RULE_createTableStatement = 6, RULE_selectTableStatement = 7, RULE_projection = 8, 
+		RULE_queryFilters = 9, RULE_tableIdentifier = 10, RULE_fieldIdentifier = 11, 
+		RULE_identifier = 12, RULE_tableDefinition = 13, RULE_fieldDefinition = 14, 
+		RULE_values = 15, RULE_constValue = 16, RULE_dataType = 17;
 	public static final String[] ruleNames = {
 		"halqlEntryPoint", "halqlStatement", "halqlDmlStatement", "halqlDdlStatement", 
 		"halqlDqlStatement", "insertRowStatement", "createTableStatement", "selectTableStatement", 
-		"queryFilters", "tableIdentifier", "fieldIdentifier", "identifier", "tableDefinition", 
-		"fieldDefinition", "values", "constValue", "dataType"
+		"projection", "queryFilters", "tableIdentifier", "fieldIdentifier", "identifier", 
+		"tableDefinition", "fieldDefinition", "values", "constValue", "dataType"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "';'", "'('", "')'", "'='", "'.'", "','", null, null, null, null, 
-		null, null, null, null, null, null, null, "'?'", "'*'"
+		null, "';'", "'('", "')'", "','", "'='", null, null, null, null, null, 
+		null, null, null, null, null, null, "'?'", "'*'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, null, null, null, "TYPE_INT", "TYPE_STRING", "KWORD_INSERT", 
+		null, null, null, null, null, null, "TYPE_INT", "TYPE_STRING", "KWORD_INSERT", 
 		"KWORD_CREATE", "KWORD_SELECT", "KWORD_FROM", "KWORD_WHERE", "KWORD_INTO", 
 		"KWORD_VALUES", "KWORD_TABLE", "KWORD_WITH", "Q_MARK", "ASTERISK", "IDENTIFIER", 
 		"QUOTED", "NUMBER", "FLOAT", "INTEGER", "WS"
@@ -141,9 +140,9 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(34);
+			setState(36);
 			halqlStatement();
-			setState(35);
+			setState(37);
 			match(T__0);
 			}
 		}
@@ -191,27 +190,27 @@ public class HalcyonQueryLanguageParser extends Parser {
 		HalqlStatementContext _localctx = new HalqlStatementContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_halqlStatement);
 		try {
-			setState(40);
+			setState(42);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case KWORD_INSERT:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(37);
+				setState(39);
 				halqlDmlStatement();
 				}
 				break;
 			case KWORD_CREATE:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(38);
+				setState(40);
 				halqlDdlStatement();
 				}
 				break;
 			case KWORD_SELECT:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(39);
+				setState(41);
 				halqlDqlStatement();
 				}
 				break;
@@ -259,7 +258,7 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(42);
+			setState(44);
 			insertRowStatement();
 			}
 		}
@@ -303,7 +302,7 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(44);
+			setState(46);
 			createTableStatement();
 			}
 		}
@@ -347,7 +346,7 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(46);
+			setState(48);
 			selectTableStatement();
 			}
 		}
@@ -397,19 +396,19 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(48);
-			match(KWORD_INSERT);
-			setState(49);
-			match(KWORD_INTO);
 			setState(50);
-			tableIdentifier();
+			match(KWORD_INSERT);
 			setState(51);
-			match(KWORD_VALUES);
+			match(KWORD_INTO);
 			setState(52);
-			match(T__1);
+			tableIdentifier();
 			setState(53);
-			values();
+			match(KWORD_VALUES);
 			setState(54);
+			match(T__1);
+			setState(55);
+			values();
+			setState(56);
 			match(T__2);
 			}
 		}
@@ -459,19 +458,19 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(56);
-			match(KWORD_CREATE);
-			setState(57);
-			match(KWORD_TABLE);
 			setState(58);
-			tableIdentifier();
+			match(KWORD_CREATE);
 			setState(59);
-			match(KWORD_WITH);
+			match(KWORD_TABLE);
 			setState(60);
-			match(T__1);
+			tableIdentifier();
 			setState(61);
-			tableDefinition();
+			match(KWORD_WITH);
 			setState(62);
+			match(T__1);
+			setState(63);
+			tableDefinition();
+			setState(64);
 			match(T__2);
 			}
 		}
@@ -488,7 +487,9 @@ public class HalcyonQueryLanguageParser extends Parser {
 
 	public static class SelectTableStatementContext extends ParserRuleContext {
 		public TerminalNode KWORD_SELECT() { return getToken(HalcyonQueryLanguageParser.KWORD_SELECT, 0); }
-		public TerminalNode ASTERISK() { return getToken(HalcyonQueryLanguageParser.ASTERISK, 0); }
+		public ProjectionContext projection() {
+			return getRuleContext(ProjectionContext.class,0);
+		}
 		public TerminalNode KWORD_FROM() { return getToken(HalcyonQueryLanguageParser.KWORD_FROM, 0); }
 		public TableIdentifierContext tableIdentifier() {
 			return getRuleContext(TableIdentifierContext.class,0);
@@ -523,26 +524,116 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(64);
-			match(KWORD_SELECT);
-			setState(65);
-			match(ASTERISK);
 			setState(66);
-			match(KWORD_FROM);
+			match(KWORD_SELECT);
 			setState(67);
+			projection();
+			setState(68);
+			match(KWORD_FROM);
+			setState(69);
 			tableIdentifier();
-			setState(70);
+			setState(72);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==KWORD_WHERE) {
 				{
-				setState(68);
+				setState(70);
 				match(KWORD_WHERE);
-				setState(69);
+				setState(71);
 				queryFilters();
 				}
 			}
 
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ProjectionContext extends ParserRuleContext {
+		public List<String> projectionList;
+		public IdentifierContext a;
+		public IdentifierContext b;
+		public TerminalNode ASTERISK() { return getToken(HalcyonQueryLanguageParser.ASTERISK, 0); }
+		public List<IdentifierContext> identifier() {
+			return getRuleContexts(IdentifierContext.class);
+		}
+		public IdentifierContext identifier(int i) {
+			return getRuleContext(IdentifierContext.class,i);
+		}
+		public ProjectionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_projection; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HalcyonQueryLanguageListener ) ((HalcyonQueryLanguageListener)listener).enterProjection(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HalcyonQueryLanguageListener ) ((HalcyonQueryLanguageListener)listener).exitProjection(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HalcyonQueryLanguageVisitor ) return ((HalcyonQueryLanguageVisitor<? extends T>)visitor).visitProjection(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ProjectionContext projection() throws RecognitionException {
+		ProjectionContext _localctx = new ProjectionContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_projection);
+
+		        ((ProjectionContext)_localctx).projectionList =  new ArrayList<>();
+		    
+		int _la;
+		try {
+			setState(87);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case ASTERISK:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(74);
+				match(ASTERISK);
+				}
+				break;
+			case IDENTIFIER:
+				enterOuterAlt(_localctx, 2);
+				{
+				{
+				setState(75);
+				((ProjectionContext)_localctx).a = identifier();
+				 _localctx.projectionList.add(((ProjectionContext)_localctx).a.value); 
+				}
+				setState(84);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				while (_la==T__3) {
+					{
+					{
+					setState(78);
+					match(T__3);
+					setState(79);
+					((ProjectionContext)_localctx).b = identifier();
+					 _localctx.projectionList.add(((ProjectionContext)_localctx).b.value); 
+					}
+					}
+					setState(86);
+					_errHandler.sync(this);
+					_la = _input.LA(1);
+				}
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -587,7 +678,7 @@ public class HalcyonQueryLanguageParser extends Parser {
 
 	public final QueryFiltersContext queryFilters() throws RecognitionException {
 		QueryFiltersContext _localctx = new QueryFiltersContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_queryFilters);
+		enterRule(_localctx, 18, RULE_queryFilters);
 
 		        ((QueryFiltersContext)_localctx).filters =  new HashMap<>();
 		    
@@ -595,11 +686,11 @@ public class HalcyonQueryLanguageParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			{
-			setState(72);
+			setState(89);
 			((QueryFiltersContext)_localctx).a = fieldIdentifier();
-			setState(73);
-			match(T__3);
-			setState(74);
+			setState(90);
+			match(T__4);
+			setState(91);
 			((QueryFiltersContext)_localctx).b = constValue();
 			}
 
@@ -643,11 +734,11 @@ public class HalcyonQueryLanguageParser extends Parser {
 
 	public final TableIdentifierContext tableIdentifier() throws RecognitionException {
 		TableIdentifierContext _localctx = new TableIdentifierContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_tableIdentifier);
+		enterRule(_localctx, 20, RULE_tableIdentifier);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(78);
+			setState(95);
 			identifier();
 			}
 		}
@@ -687,11 +778,11 @@ public class HalcyonQueryLanguageParser extends Parser {
 
 	public final FieldIdentifierContext fieldIdentifier() throws RecognitionException {
 		FieldIdentifierContext _localctx = new FieldIdentifierContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_fieldIdentifier);
+		enterRule(_localctx, 22, RULE_fieldIdentifier);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(80);
+			setState(97);
 			((FieldIdentifierContext)_localctx).IDENTIFIER = match(IDENTIFIER);
 			 ((FieldIdentifierContext)_localctx).fieldId =  (((FieldIdentifierContext)_localctx).IDENTIFIER!=null?((FieldIdentifierContext)_localctx).IDENTIFIER.getText():null); 
 			}
@@ -708,10 +799,9 @@ public class HalcyonQueryLanguageParser extends Parser {
 	}
 
 	public static class IdentifierContext extends ParserRuleContext {
-		public List<TerminalNode> IDENTIFIER() { return getTokens(HalcyonQueryLanguageParser.IDENTIFIER); }
-		public TerminalNode IDENTIFIER(int i) {
-			return getToken(HalcyonQueryLanguageParser.IDENTIFIER, i);
-		}
+		public String value;
+		public Token IDENTIFIER;
+		public TerminalNode IDENTIFIER() { return getToken(HalcyonQueryLanguageParser.IDENTIFIER, 0); }
 		public IdentifierContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -733,29 +823,13 @@ public class HalcyonQueryLanguageParser extends Parser {
 
 	public final IdentifierContext identifier() throws RecognitionException {
 		IdentifierContext _localctx = new IdentifierContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_identifier);
+		enterRule(_localctx, 24, RULE_identifier);
 		try {
-			setState(87);
-			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(83);
-				match(IDENTIFIER);
-				setState(84);
-				match(T__4);
-				setState(85);
-				match(IDENTIFIER);
-				}
-				break;
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(86);
-				match(IDENTIFIER);
-				}
-				break;
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(100);
+			((IdentifierContext)_localctx).IDENTIFIER = match(IDENTIFIER);
+			 ((IdentifierContext)_localctx).value =  (((IdentifierContext)_localctx).IDENTIFIER!=null?((IdentifierContext)_localctx).IDENTIFIER.getText():null); 
 			}
 		}
 		catch (RecognitionException re) {
@@ -800,7 +874,7 @@ public class HalcyonQueryLanguageParser extends Parser {
 
 	public final TableDefinitionContext tableDefinition() throws RecognitionException {
 		TableDefinitionContext _localctx = new TableDefinitionContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_tableDefinition);
+		enterRule(_localctx, 26, RULE_tableDefinition);
 
 		        ((TableDefinitionContext)_localctx).tableDef =  new LinkedHashMap<String, DataType>();
 		    
@@ -808,23 +882,23 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(89);
+			setState(103);
 			((TableDefinitionContext)_localctx).a = fieldDefinition();
 			 _localctx.tableDef.put(((TableDefinitionContext)_localctx).a.def.fieldId, ((TableDefinitionContext)_localctx).a.def.dataType); 
-			setState(97);
+			setState(111);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==T__5) {
+			while (_la==T__3) {
 				{
 				{
-				setState(91);
-				match(T__5);
-				setState(92);
+				setState(105);
+				match(T__3);
+				setState(106);
 				((TableDefinitionContext)_localctx).b = fieldDefinition();
 				 _localctx.tableDef.put(((TableDefinitionContext)_localctx).b.def.fieldId, ((TableDefinitionContext)_localctx).b.def.dataType); 
 				}
 				}
-				setState(99);
+				setState(113);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -872,13 +946,13 @@ public class HalcyonQueryLanguageParser extends Parser {
 
 	public final FieldDefinitionContext fieldDefinition() throws RecognitionException {
 		FieldDefinitionContext _localctx = new FieldDefinitionContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_fieldDefinition);
+		enterRule(_localctx, 28, RULE_fieldDefinition);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(100);
+			setState(114);
 			((FieldDefinitionContext)_localctx).a = fieldIdentifier();
-			setState(101);
+			setState(115);
 			((FieldDefinitionContext)_localctx).b = dataType();
 			 ((FieldDefinitionContext)_localctx).def =  new FieldDef(((FieldDefinitionContext)_localctx).a.fieldId, ((FieldDefinitionContext)_localctx).b.dtType); 
 			}
@@ -925,7 +999,7 @@ public class HalcyonQueryLanguageParser extends Parser {
 
 	public final ValuesContext values() throws RecognitionException {
 		ValuesContext _localctx = new ValuesContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_values);
+		enterRule(_localctx, 30, RULE_values);
 
 		        ((ValuesContext)_localctx).valueList =  new ArrayList<String>();
 		    
@@ -933,23 +1007,23 @@ public class HalcyonQueryLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(104);
+			setState(118);
 			((ValuesContext)_localctx).a = constValue();
 			 _localctx.valueList.add(((ValuesContext)_localctx).a.value); 
-			setState(112);
+			setState(126);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==T__5) {
+			while (_la==T__3) {
 				{
 				{
-				setState(106);
-				match(T__5);
-				setState(107);
+				setState(120);
+				match(T__3);
+				setState(121);
 				((ValuesContext)_localctx).b = constValue();
 				 _localctx.valueList.add(((ValuesContext)_localctx).b.value); 
 				}
 				}
-				setState(114);
+				setState(128);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -993,15 +1067,15 @@ public class HalcyonQueryLanguageParser extends Parser {
 
 	public final ConstValueContext constValue() throws RecognitionException {
 		ConstValueContext _localctx = new ConstValueContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_constValue);
+		enterRule(_localctx, 32, RULE_constValue);
 		try {
-			setState(119);
+			setState(133);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case NUMBER:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(115);
+				setState(129);
 				((ConstValueContext)_localctx).NUMBER = match(NUMBER);
 				 ((ConstValueContext)_localctx).value =  (((ConstValueContext)_localctx).NUMBER!=null?((ConstValueContext)_localctx).NUMBER.getText():null); 
 				}
@@ -1009,7 +1083,7 @@ public class HalcyonQueryLanguageParser extends Parser {
 			case QUOTED:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(117);
+				setState(131);
 				((ConstValueContext)_localctx).QUOTED = match(QUOTED);
 				 ((ConstValueContext)_localctx).value =  (((ConstValueContext)_localctx).QUOTED!=null?((ConstValueContext)_localctx).QUOTED.getText():null); 
 				}
@@ -1054,15 +1128,15 @@ public class HalcyonQueryLanguageParser extends Parser {
 
 	public final DataTypeContext dataType() throws RecognitionException {
 		DataTypeContext _localctx = new DataTypeContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_dataType);
+		enterRule(_localctx, 34, RULE_dataType);
 		try {
-			setState(125);
+			setState(139);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case TYPE_INT:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(121);
+				setState(135);
 				match(TYPE_INT);
 				((DataTypeContext)_localctx).dtType =  DataType.INTEGER; 
 				}
@@ -1070,7 +1144,7 @@ public class HalcyonQueryLanguageParser extends Parser {
 			case TYPE_STRING:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(123);
+				setState(137);
 				match(TYPE_STRING);
 				((DataTypeContext)_localctx).dtType =  DataType.STRING; 
 				}
@@ -1091,36 +1165,42 @@ public class HalcyonQueryLanguageParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\33\u0082\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\32\u0090\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
-		"\3\2\3\2\3\2\3\3\3\3\3\3\5\3+\n\3\3\4\3\4\3\5\3\5\3\6\3\6\3\7\3\7\3\7"+
-		"\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3"+
-		"\t\3\t\5\tI\n\t\3\n\3\n\3\n\3\n\3\n\3\n\3\13\3\13\3\f\3\f\3\f\3\r\3\r"+
-		"\3\r\3\r\5\rZ\n\r\3\16\3\16\3\16\3\16\3\16\3\16\7\16b\n\16\f\16\16\16"+
-		"e\13\16\3\17\3\17\3\17\3\17\3\20\3\20\3\20\3\20\3\20\3\20\7\20q\n\20\f"+
-		"\20\16\20t\13\20\3\21\3\21\3\21\3\21\5\21z\n\21\3\22\3\22\3\22\3\22\5"+
-		"\22\u0080\n\22\3\22\2\2\23\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"\2"+
-		"\2\2x\2$\3\2\2\2\4*\3\2\2\2\6,\3\2\2\2\b.\3\2\2\2\n\60\3\2\2\2\f\62\3"+
-		"\2\2\2\16:\3\2\2\2\20B\3\2\2\2\22J\3\2\2\2\24P\3\2\2\2\26R\3\2\2\2\30"+
-		"Y\3\2\2\2\32[\3\2\2\2\34f\3\2\2\2\36j\3\2\2\2 y\3\2\2\2\"\177\3\2\2\2"+
-		"$%\5\4\3\2%&\7\3\2\2&\3\3\2\2\2\'+\5\6\4\2(+\5\b\5\2)+\5\n\6\2*\'\3\2"+
-		"\2\2*(\3\2\2\2*)\3\2\2\2+\5\3\2\2\2,-\5\f\7\2-\7\3\2\2\2./\5\16\b\2/\t"+
-		"\3\2\2\2\60\61\5\20\t\2\61\13\3\2\2\2\62\63\7\13\2\2\63\64\7\20\2\2\64"+
-		"\65\5\24\13\2\65\66\7\21\2\2\66\67\7\4\2\2\678\5\36\20\289\7\5\2\29\r"+
-		"\3\2\2\2:;\7\f\2\2;<\7\22\2\2<=\5\24\13\2=>\7\23\2\2>?\7\4\2\2?@\5\32"+
-		"\16\2@A\7\5\2\2A\17\3\2\2\2BC\7\r\2\2CD\7\25\2\2DE\7\16\2\2EH\5\24\13"+
-		"\2FG\7\17\2\2GI\5\22\n\2HF\3\2\2\2HI\3\2\2\2I\21\3\2\2\2JK\5\26\f\2KL"+
-		"\7\6\2\2LM\5 \21\2MN\3\2\2\2NO\b\n\1\2O\23\3\2\2\2PQ\5\30\r\2Q\25\3\2"+
-		"\2\2RS\7\26\2\2ST\b\f\1\2T\27\3\2\2\2UV\7\26\2\2VW\7\7\2\2WZ\7\26\2\2"+
-		"XZ\7\26\2\2YU\3\2\2\2YX\3\2\2\2Z\31\3\2\2\2[\\\5\34\17\2\\c\b\16\1\2]"+
-		"^\7\b\2\2^_\5\34\17\2_`\b\16\1\2`b\3\2\2\2a]\3\2\2\2be\3\2\2\2ca\3\2\2"+
-		"\2cd\3\2\2\2d\33\3\2\2\2ec\3\2\2\2fg\5\26\f\2gh\5\"\22\2hi\b\17\1\2i\35"+
-		"\3\2\2\2jk\5 \21\2kr\b\20\1\2lm\7\b\2\2mn\5 \21\2no\b\20\1\2oq\3\2\2\2"+
-		"pl\3\2\2\2qt\3\2\2\2rp\3\2\2\2rs\3\2\2\2s\37\3\2\2\2tr\3\2\2\2uv\7\30"+
-		"\2\2vz\b\21\1\2wx\7\27\2\2xz\b\21\1\2yu\3\2\2\2yw\3\2\2\2z!\3\2\2\2{|"+
-		"\7\t\2\2|\u0080\b\22\1\2}~\7\n\2\2~\u0080\b\22\1\2\177{\3\2\2\2\177}\3"+
-		"\2\2\2\u0080#\3\2\2\2\t*HYcry\177";
+		"\4\23\t\23\3\2\3\2\3\2\3\3\3\3\3\3\5\3-\n\3\3\4\3\4\3\5\3\5\3\6\3\6\3"+
+		"\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t"+
+		"\3\t\3\t\3\t\3\t\5\tK\n\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\7\nU\n\n\f\n"+
+		"\16\nX\13\n\5\nZ\n\n\3\13\3\13\3\13\3\13\3\13\3\13\3\f\3\f\3\r\3\r\3\r"+
+		"\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3\17\3\17\7\17p\n\17\f\17\16\17s\13"+
+		"\17\3\20\3\20\3\20\3\20\3\21\3\21\3\21\3\21\3\21\3\21\7\21\177\n\21\f"+
+		"\21\16\21\u0082\13\21\3\22\3\22\3\22\3\22\5\22\u0088\n\22\3\23\3\23\3"+
+		"\23\3\23\5\23\u008e\n\23\3\23\2\2\24\2\4\6\b\n\f\16\20\22\24\26\30\32"+
+		"\34\36 \"$\2\2\2\u0086\2&\3\2\2\2\4,\3\2\2\2\6.\3\2\2\2\b\60\3\2\2\2\n"+
+		"\62\3\2\2\2\f\64\3\2\2\2\16<\3\2\2\2\20D\3\2\2\2\22Y\3\2\2\2\24[\3\2\2"+
+		"\2\26a\3\2\2\2\30c\3\2\2\2\32f\3\2\2\2\34i\3\2\2\2\36t\3\2\2\2 x\3\2\2"+
+		"\2\"\u0087\3\2\2\2$\u008d\3\2\2\2&\'\5\4\3\2\'(\7\3\2\2(\3\3\2\2\2)-\5"+
+		"\6\4\2*-\5\b\5\2+-\5\n\6\2,)\3\2\2\2,*\3\2\2\2,+\3\2\2\2-\5\3\2\2\2./"+
+		"\5\f\7\2/\7\3\2\2\2\60\61\5\16\b\2\61\t\3\2\2\2\62\63\5\20\t\2\63\13\3"+
+		"\2\2\2\64\65\7\n\2\2\65\66\7\17\2\2\66\67\5\26\f\2\678\7\20\2\289\7\4"+
+		"\2\29:\5 \21\2:;\7\5\2\2;\r\3\2\2\2<=\7\13\2\2=>\7\21\2\2>?\5\26\f\2?"+
+		"@\7\22\2\2@A\7\4\2\2AB\5\34\17\2BC\7\5\2\2C\17\3\2\2\2DE\7\f\2\2EF\5\22"+
+		"\n\2FG\7\r\2\2GJ\5\26\f\2HI\7\16\2\2IK\5\24\13\2JH\3\2\2\2JK\3\2\2\2K"+
+		"\21\3\2\2\2LZ\7\24\2\2MN\5\32\16\2NO\b\n\1\2OV\3\2\2\2PQ\7\6\2\2QR\5\32"+
+		"\16\2RS\b\n\1\2SU\3\2\2\2TP\3\2\2\2UX\3\2\2\2VT\3\2\2\2VW\3\2\2\2WZ\3"+
+		"\2\2\2XV\3\2\2\2YL\3\2\2\2YM\3\2\2\2Z\23\3\2\2\2[\\\5\30\r\2\\]\7\7\2"+
+		"\2]^\5\"\22\2^_\3\2\2\2_`\b\13\1\2`\25\3\2\2\2ab\5\32\16\2b\27\3\2\2\2"+
+		"cd\7\25\2\2de\b\r\1\2e\31\3\2\2\2fg\7\25\2\2gh\b\16\1\2h\33\3\2\2\2ij"+
+		"\5\36\20\2jq\b\17\1\2kl\7\6\2\2lm\5\36\20\2mn\b\17\1\2np\3\2\2\2ok\3\2"+
+		"\2\2ps\3\2\2\2qo\3\2\2\2qr\3\2\2\2r\35\3\2\2\2sq\3\2\2\2tu\5\30\r\2uv"+
+		"\5$\23\2vw\b\20\1\2w\37\3\2\2\2xy\5\"\22\2y\u0080\b\21\1\2z{\7\6\2\2{"+
+		"|\5\"\22\2|}\b\21\1\2}\177\3\2\2\2~z\3\2\2\2\177\u0082\3\2\2\2\u0080~"+
+		"\3\2\2\2\u0080\u0081\3\2\2\2\u0081!\3\2\2\2\u0082\u0080\3\2\2\2\u0083"+
+		"\u0084\7\27\2\2\u0084\u0088\b\22\1\2\u0085\u0086\7\26\2\2\u0086\u0088"+
+		"\b\22\1\2\u0087\u0083\3\2\2\2\u0087\u0085\3\2\2\2\u0088#\3\2\2\2\u0089"+
+		"\u008a\7\b\2\2\u008a\u008e\b\23\1\2\u008b\u008c\7\t\2\2\u008c\u008e\b"+
+		"\23\1\2\u008d\u0089\3\2\2\2\u008d\u008b\3\2\2\2\u008e%\3\2\2\2\n,JVYq"+
+		"\u0080\u0087\u008d";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
